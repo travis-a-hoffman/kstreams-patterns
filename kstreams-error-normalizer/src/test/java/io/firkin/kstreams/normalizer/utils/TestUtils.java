@@ -1,7 +1,5 @@
-package io.firkin.kstreams.utils;
+package io.firkin.kstreams.normalizer.utils;
 
-import io.firkin.containers.SchemaRegistryContainer;
-import io.firkin.containers.ZookeeperContainer;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.testcontainers.containers.KafkaContainer;
@@ -25,27 +23,15 @@ public class TestUtils {
   public static final TimeUnit   TIMEUNIT = TimeUnit.SECONDS;
   public static final String KAFKA_VERSION = "2.8";
   public static final String CONFLUENT_VERSION = "6.1.1";
-  public static final String CP_KAFKA = "confluentinc/cp-kafka";
-  public static final String CP_SCHEMA_REGISTRY = "confluentinc/cp-schema-registry";
-  public static final String CP_ZOOKEEPER = "confluentinc/cp-zookeeper";
+  public static final String CONFLUENT_PLATFORM = "confluentinc/cp-kafka";
 
   // --- Test Container Stuff -----------------------------------------------------------------------------
-
+  @Container
+  private static KafkaContainer container;
   private static Network network;
 
-
-  @Container
-  private static KafkaContainer kafkaContainer;
-  @Container
-  private static SchemaRegistryContainer schemaRegistryContainer;
-  @Container
-  private static ZookeeperContainer zookeeperContainer;
-
-  private static AdminClient adminClient;
-
   private static String bootstrap;
-  private static String registry;
-  private static String zookeeper;
+  private static AdminClient adminClient;
 
   static {
     // TODO This can take a minute (or more) in some cases.
@@ -68,16 +54,15 @@ public class TestUtils {
    * NOTE: TestContainers automatically cleans up / spins down all containers.
    */
   private static synchronized void spinupContainers() {
-    if (network != null || kafkaContainer != null || bootstrap != null || adminClient != null) {
+    if (network != null || container != null || bootstrap != null || adminClient != null) {
       return;
     }
 
     long lStart = System.currentTimeMillis();
     System.out.println("TESTCONTAINERS: Spinning up Single-Broker Kafka Cluster Container(s)...");
     network = Network.newNetwork();
-
-    // TODO Make it possible to spin up multiple brokers
-    kafkaContainer = new KafkaContainer(DockerImageName.parse(CP_KAFKA).withTag(CONFLUENT_VERSION))
+    container = new KafkaContainer(DockerImageName.parse(CONFLUENT_PLATFORM)
+        .withTag(CONFLUENT_VERSION))
         .withNetwork(network)
         .withEnv("KAFKA_BROKER_ID", "1")
         .withEnv("KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR", "1")
@@ -85,26 +70,11 @@ public class TestUtils {
         .withEnv("KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR", "1")
         .withEnv("KAFKA_TRANSACTION_STATE_LOG_MIN_ISR", "1");
 
-//    schemaRegistryContainer = new SchemaRegistryContainer(DockerImageName.parse(CP_SCHEMA_REGISTRY).withTag(CONFLUENT_VERSION))
-//        .withNetwork(network);
-
-//    zookeeperContainer = new ZookeeperContainer(DockerImageName.parse(CP_ZOOKEEPER).withTag(CONFLUENT_VERSION))
-//        .withNetwork(network);
-
-
     try {
-//      Startables.deepStart(List.of(kafkaContainer, schemaRegistryContainer, zookeeperContainer)).get(120, TIMEUNIT);
-      Startables.deepStart(List.of(kafkaContainer)).get(120, TIMEUNIT);
-      bootstrap = kafkaContainer.getBootstrapServers();
-//      zookeeper = zookeeperContainer.getInternalUrl();
-//      registry  = schemaRegistryContainer.getUrl();
-
-//      zookeeperContainer.start();
-//      assertTrue(zookeeperContainer.isCreated() && zookeeperContainer.isRunning());
-      kafkaContainer.start();
-      assertTrue(kafkaContainer.isCreated() && kafkaContainer.isRunning());
-//      schemaRegistryContainer.start();
-//      assertTrue(schemaRegistryContainer.isCreated() && schemaRegistryContainer.isRunning());
+      Startables.deepStart(List.of(container)).get(120, TIMEUNIT);
+      bootstrap = container.getBootstrapServers();
+      container.start();
+      assertTrue(container.isCreated() && container.isRunning());
     } catch (ExecutionException | InterruptedException | TimeoutException e) {
       fail("Could not spin up the Kafka Container", e);
     }
@@ -147,13 +117,13 @@ public class TestUtils {
   // --- Kafka Container Assertions
 
   public static void assertKafkaClusterReady() {
-    assertNotNull(kafkaContainer);
-    assertTrue(kafkaContainer.isRunning());
+    assertNotNull(container);
+    assertTrue(container.isRunning());
   }
 
   public static void assertSchemaRegistryReady() {
-    assertNotNull(kafkaContainer);
-    assertTrue(kafkaContainer.isRunning());
+    assertNotNull(container);
+    assertTrue(container.isRunning());
   }
 
 }

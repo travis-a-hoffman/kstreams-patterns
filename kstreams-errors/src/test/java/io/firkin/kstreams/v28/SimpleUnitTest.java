@@ -105,7 +105,7 @@ public class SimpleUnitTest {
     int recordVal = 0;
     producer.send(new ProducerRecord<>(topicName,  "key-"+recordKey++, "Hello Kafka ("+recordVal+++")")).get();
 
-    ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
+    ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(TIMEOUT));
     assertTrue(
         StreamSupport
             .stream(records.spliterator(), false)

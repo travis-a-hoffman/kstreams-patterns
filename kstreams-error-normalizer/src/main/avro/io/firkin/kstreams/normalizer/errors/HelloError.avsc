@@ -1,0 +1,41 @@
+{
+  "type": "record",
+  "namespace": "io.firkin.kstreams.normalizer.errors",
+  "name": "HelloError",
+  "doc": "Model for a HelloWorld errors topic. This acts as a source Error Topic Schema for Normalizer test Cases.",
+  "fields": [
+    {
+      "name": "eventId",
+      "doc": "The business UUID ",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid",
+        "default": ""
+      }
+    },
+    {
+      "name": "correlationId",
+      "doc": "The system-wide correlation UUID, which can be used for event tracing across systems.",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid",
+        "default": ""
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long"
+//        "logicalType": "date"
+      }
+    },
+    {
+      "name": "personName",
+      "doc": "The name of the person to say hello to.",
+      "type": {
+        "type": "string",
+        "default": "World"
+      }
+    }
+  ]
+}
