@@ -108,8 +108,8 @@ Special care in record design (and processing) may be required to avoid such pro
 
 # Setup / Installation
 
-See https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools
+You'll need maven and java 1.11+. To run the tests, you'll need the docker daemon running.
+
 ```shell
-$> brew install nuget
-$> nuget
+$> mvn clean test
 ```
