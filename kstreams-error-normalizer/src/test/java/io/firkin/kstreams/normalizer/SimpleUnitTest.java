@@ -1,8 +1,24 @@
+/*
+ * Copyright © 2021 Travis Hoffman (travis@firkin.io)
+ * Copyright © 2021 Firkin IO (https://firkin.io/)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package io.firkin.kstreams.normalizer;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.FunnyName;
-import com.github.javafaker.Name;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
@@ -11,6 +27,7 @@ import org.apache.kafka.clients.admin.Admin;
 import org.apache.kafka.clients.admin.ListTopicsOptions;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -35,7 +52,6 @@ import static io.firkin.kstreams.normalizer.utils.TestUtils.TIMEUNIT;
 import static io.firkin.kstreams.normalizer.utils.TestUtils.assertKafkaClusterReady;
 import static io.firkin.kstreams.normalizer.utils.TestUtils.getAdminClient;
 import static io.firkin.kstreams.normalizer.utils.TestUtils.getBootstrapServers;
-import static org.apache.kafka.clients.producer.ProducerConfig.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -62,10 +78,10 @@ public class SimpleUnitTest {
     String bootstrap = getBootstrapServers();
 
     Properties props = new Properties();
-    props.put(BOOTSTRAP_SERVERS_CONFIG, bootstrap);
-    props.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    props.put(VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
-    props.put(CLIENT_ID_CONFIG, UUID.randomUUID().toString());
+    props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrap);
+    props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
+    props.put(ProducerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString());
     // TODO Run with a "real" schema registry.
     // props.put("schema.registry.url", "http://localhost:2181");
 

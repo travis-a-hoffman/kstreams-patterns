@@ -8,13 +8,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="kstreams-errors" />
         <module name="kstreams-error-normalizer" />
+        <module name="kafka-cluster" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="kstreams" target="11" />
+      <module name="kafka-cluster" target="11" />
       <module name="kstreams-error-normalizer" target="11" />
       <module name="kstreams-errors" target="11" />
       <module name="kstreams-parent" target="11" />
+      <module name="kstreams-patterns" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

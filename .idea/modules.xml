@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/kstreams.iml" filepath="$PROJECT_DIR$/kstreams.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kafka-cluster/kafka-cluster.iml" filepath="$PROJECT_DIR$/kafka-cluster/kafka-cluster.iml" />
       <module fileurl="file://$PROJECT_DIR$/kstreams-error-normalizer/kstreams-error-normalizer.iml" filepath="$PROJECT_DIR$/kstreams-error-normalizer/kstreams-error-normalizer.iml" />
       <module fileurl="file://$PROJECT_DIR$/kstreams-errors/kstreams-errors.iml" filepath="$PROJECT_DIR$/kstreams-errors/kstreams-errors.iml" />
       <module fileurl="file://$PROJECT_DIR$/kstreams-parent/kstreams-parent.iml" filepath="$PROJECT_DIR$/kstreams-parent/kstreams-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kstreams-patterns.iml" filepath="$PROJECT_DIR$/kstreams-patterns.iml" />
     </modules>
   </component>
 </project>
