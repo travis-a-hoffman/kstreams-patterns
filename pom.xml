@@ -53,6 +53,5 @@
         <module>kstreams-parent</module>
         <module>kstreams-errors</module>
         <module>kstreams-error-normalizer</module>
-        <module>kafka-cluster</module>
     </modules>
 </project>
