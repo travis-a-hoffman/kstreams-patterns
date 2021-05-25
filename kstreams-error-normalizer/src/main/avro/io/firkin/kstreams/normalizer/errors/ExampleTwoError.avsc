@@ -1,7 +1,7 @@
 {
   "type": "record",
-  "namespace": "io.firkin.kstreams.normalizer.errors",
-  "name": "NormalizedConnectorError",
+  "namespace": "io.firkin.kstreams.normalizer.errors.v1.avsc",
+  "name": "ExampleTwoError",
   "doc": "Model for errors that arise from Confluent Connectors. Errors and message from specific connectors should be mapped to this schema.",
   "fields": [
     {
@@ -31,6 +31,7 @@
       },
       "doc": "Keys value pairs for any domain specific metadata"
     },
+
     {
       "name": "source_message",
       "type": "string",

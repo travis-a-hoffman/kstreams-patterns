@@ -1,0 +1,184 @@
+/**
+ * A protocol defining multiple Record types in a single file, which makes it
+ * easier to bundle related Records, and to version schema changes across multiple
+ * record types.
+ *
+ * Design decision: A protocol defines more than just avro types, it defines an RPC exchange
+ *   of information between systems. This includes 3 things:
+ *     1. Record Types - The data normally exchanged by protocol exchanges
+ *     2. Error Types  - The data returned by the protocol methods upon an error
+ *     3. RPC Methods  - The method calls provided in the generated client library
+ *
+ *   In this example, we are exploring patterns for best aligning a variety of error messages
+ *   from other systems, not from an avro protocol. Unfortunately, our "Error" types are the
+ *   "normal" records exchanged by this protocol, not the protocol errors.
+ *
+ *   Overloading the type names is regrettably confusing, this example is about demonstrating
+ *   how to use an .avdl (Avro Domain-Specific Language) protocol/file to bundle related schemas
+ *   together in a more easily managed (and versioned) way.
+ *
+ *   One of the best parts of this file is that it supports comments (like this one), which is
+ *   not (easily) possible in .avsc files, which are just JSON.
+ */
+// The namespace maps to the package in Java, and namespace in C#.
+@namespace("io.firkin.kstreams.normalizer.errors.v1.avdl")
+protocol `NormalizedErrorProtocol` {
+    // version "1.0.0"
+
+    /**
+     * Records and Errors are more-or-less identical, they generate very similar code. In
+     * Java, error types will extend a Throwable, and include a value + cause in the object.
+     * The cause is not
+     */
+    record HelloRecord {
+        /** Message to send. */
+        string message = "Hello, World!";
+    }
+
+    /**
+     * Example Model for errors like those which might arise from a Source Connector.
+     * Errors of this type will need to be mapped to a common schema.
+     *
+     * Other errors alias themselves to BaseError to indicate they care
+     */
+    record BaseError {
+        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        @logicalType("timestamp-millis") long timestamp;
+        /** Unique id for event tracing. A required field. */
+        @logicalType("uuid") string correlation_id;
+
+        /** (optional) Environment where the error took place. */
+        union{ null, string } environment_id = null;
+        /** (optional) Application where the error took place. */
+        union{ null, string } application_id = null;
+        /** (optional) Instance of the Application where the error took place. */
+        union{ null, string } instance_id = null;
+
+        /** (optional) Metadata from the source system */
+        union{ null, map<string> } metadata = null;
+
+        /** (optional) Data which caused the error */
+        union{ null, bytes } original = null;
+
+        /** 'error' means this will also generate a "cause" field in Java. */
+    }
+
+    /**
+     * Example Error Model which comes from one source system.
+     */
+    @aliases(["BaseError"])
+    record ExampleOneError {
+        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        @logicalType("timestamp-millis") long timestamp;
+        /** Unique id for event tracing. A required field. */
+        @logicalType("uuid") string correlation_id;
+
+        /** (optional) Environment where the error took place. */
+        union{ null, string } environment_id = null;
+        /** (optional) Application where the error took place. */
+        union{ null, string } application_id = null;
+        /** (optional) Instance of the Application where the error took place. */
+        union{ null, string } instance_id = null;
+
+        /** (required) Fields */
+
+        /** (required) Metadata from the upstream (source) system. Can be empty */
+        map<string> upstream_metadata = {};
+
+        /** (optional) Data which caused the error */
+        union{ null, bytes }  upstream_data = null;
+        /** (optional) URL which caused the error */
+        union{ null, string } upstream_url = null;
+        /** (optional) Response from the upstream system */
+        union{ null, string } upstream_response = null;
+
+        /** (optional) Intended topic for success. */
+        union{ null, string } success_topic = null;
+        /** (optional) Intended topic for error. */
+        union{ null, string } error_topic = null;
+    }
+
+    /**
+     * Example Error Model which comes from a sink system. This error comes from
+     * a Sink which reads from a Topic, using the record to perform an action.
+     */
+    @aliases(["BaseError"])
+    record ExampleTwoError {
+        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        @logicalType("timestamp-millis") long timestamp;
+        /** Unique id for event tracing. A required field. */
+        @logicalType("uuid") string correlation_id;
+
+        /** (optional) Environment where the error took place. */
+        union{ null, string } environment_id = null;
+        /** (optional) Application where the error took place. */
+        union{ null, string } application_id = null;
+        /** (optional) Instance of the Application where the error took place. */
+        union{ null, string } instance_id = null;
+
+        /** (optional) Metadata from the source system. Can be missing */
+        union{ null, map<string>} downstream_metadata = null;
+
+        /** (required) original record which caused the error. */
+        bytes original_record;
+        map<bytes> related_data = {};
+
+        union{ null, string } upstream_topic = null;
+        union{ null, string } upstream_cluster = null;
+        union{ null, string } source_topic = null;
+    }
+
+    /**
+     * An object capturing information about the source of the error.
+     */
+    record SystemInfo {
+        @logicalType("uuid") string `id`;
+        string name = "unnamed";
+        union{ null, string } description = null;
+        union{ null, string } url = null;
+        union{ null, string } environmentId = null;
+        union{ null, string } applicationId = null;
+        union{ null, string } instanceId = null;
+        union{ null, array<string> } tags = null;
+    }
+
+    /**
+     * Example Normalized Error Model to which all other errors are (re)formatted.
+     */
+    @aliases(["BaseError"])
+    record NormalizedError {
+        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        @logicalType("timestamp-millis") long timestamp;
+        /** Unique id for event tracing. A required field. */
+        @logicalType("uuid") string correlation_id;
+
+        /** (optional) Environment where the error took place. */
+        union{ null, string } environment_id = null;
+        /** (optional) Application where the error took place. */
+        union{ null, string } application_id = null;
+        /** (optional) Instance of the Application where the error took place. */
+        union{ null, string } instance_id = null;
+
+        /**
+         *  (required) Some originating errors require metadata, but not all.
+         *  We normalize to "required" so there is always something available for
+         *  downstream systems ... even if it is empty.
+         */
+        map<string> kafka_metadata = {};    // Java: Map<String, String>
+        map<bytes>  kafka_record = {};      // Java: Map<String, byte[]>
+        map<bytes>  kafka_schema = {};      // Java: Map<String, String>
+        map<bytes>  kafka_data = {};        // Java: Map<String, byte[]> Additional data
+
+        map<string> related_metadata = {};  // Java -> Map<String, String>
+        map<bytes>  related_data = {};      // Java -> Map<String, byte[]>
+    }
+
+    /*
+     * Protocols can (optionally) define methods for the protocol. When methods
+     * are not defined, this is effetively a nicer way to manage the definition
+     * of multiple types in a single file, with a DSL and niceties like inlined
+     * quotes.
+     */
+    //void hello(HelloRecord hrMessage) oneway;
+
+}

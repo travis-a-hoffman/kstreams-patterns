@@ -59,7 +59,7 @@
         <apache.avro.version>1.10.2</apache.avro.version>
         <apache.commons.lang.version>3.12.0</apache.commons.lang.version>
         <apache.commons.text.version>1.9</apache.commons.text.version>
-        <apache.kafka.version>2.6.0</apache.kafka.version>
+        <apache.kafka.version>2.8.0</apache.kafka.version>
         <io.confluent.version>6.1.1</io.confluent.version>
         <junit.version>5.7.1</junit.version>
         <org.testcontainers.version>1.15.2</org.testcontainers.version>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>
-            <version>${io.confluent.version}-ccs</version>
+            <version>${apache.kafka.version}</version>
         </dependency>
 
         <dependency>
@@ -101,6 +101,7 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Test Dependencies -->
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>

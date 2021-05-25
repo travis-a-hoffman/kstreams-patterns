@@ -1,0 +1,51 @@
+{
+  "type": "record",
+  "namespace": "io.firkin.kstreams.normalizer.errors.v1.avsc",
+  "name": "BaseError",
+  "doc": "Example Model for errors like those that might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "local-timestamp-millis"
+      },
+      "doc": "The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime."
+    },
+    {
+      "name": "correlation_id",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique id for event tracing"
+    },
+    {
+      "name": "environment_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to."
+    },
+    {
+      "name": "application_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to."
+    },
+    {
+      "name": "instance_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change."
+    }
+  ]
+}

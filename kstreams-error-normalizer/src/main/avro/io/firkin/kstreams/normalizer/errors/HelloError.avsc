@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "namespace": "io.firkin.kstreams.normalizer.errors",
+  "namespace": "io.firkin.kstreams.normalizer.errors.v1.avsc",
   "name": "HelloError",
   "doc": "Model for a HelloWorld errors topic. This acts as a source Error Topic Schema for Normalizer test Cases.",
   "fields": [

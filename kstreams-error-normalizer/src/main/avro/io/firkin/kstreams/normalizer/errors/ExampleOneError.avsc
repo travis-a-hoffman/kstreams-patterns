@@ -1,0 +1,83 @@
+{
+  "type": "record",
+  "namespace": "io.firkin.kstreams.normalizer.errors.v1.avsc",
+  "name": "ExampleOneError",
+  "doc": "Example Model for errors like those that might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.",
+  "fields": [
+    {
+      "name": "correlation_id",
+      "type": "string",
+      "doc": "Unique id for event tracing"
+    },
+    {
+      "name": "environment_id",
+      "type": "string",
+      "doc": "Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to."
+    },
+    {
+      "name": "service_id",
+      "type": "string",
+      "doc": "The identifier of the service. This ..."
+    },
+    {
+      "name": "exception",
+      "type": "string",
+      "doc": "Error information from the connector"
+    },
+    {
+      "name": "metadata",
+      "type": {
+        "type": "map",
+        "values": "string"
+      },
+      "doc": "Keys value pairs for any domain specific metadata"
+    },
+    {
+      "name": "source_message",
+      "type": "string",
+      "doc": "Message that caused the error"
+    },
+    {
+      "name": "source_message_schema_name",
+      "type": "string",
+      "doc": "Schema name of the source message"
+    },
+    {
+      "name": "source_message_offset",
+      "type": "int",
+      "doc": "Offset of the source message"
+    },
+    {
+      "name": "source_url",
+      "type": "string",
+      "doc": "URL for the source object"
+    },
+    {
+      "name": "source_value",
+      "type": "bytes",
+      "doc": "The original object from the source service, which caused the error."
+    },
+    {
+      "name": "source_schema",
+      "type": "string",
+      "doc": "Location to the definition of the source object's schema (if any)."
+    },
+    {
+      "name": "source_schema_id",
+      "type": "string",
+      "doc": "Identifier of the source object's schema."
+    },
+    {
+      "name": "topic",
+      "type": "string",
+      "doc": "Name of the intended destination topic. In this error, we have a destination topic."
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      }
+    }
+  ]
+}

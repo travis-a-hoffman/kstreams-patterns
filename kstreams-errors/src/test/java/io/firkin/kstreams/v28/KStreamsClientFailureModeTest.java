@@ -24,7 +24,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.StreamsUncaughtExceptionHandler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -47,6 +50,7 @@ public class KStreamsClientFailureModeTest {
 
   private static KStream<String, String>         kStream;
 
+  private static StreamsUncaughtExceptionHandler kStreamErrorHandler;
   private static final int defPartitions = 1;
   private static final short defReplication = 1;
 
@@ -76,6 +80,8 @@ public class KStreamsClientFailureModeTest {
         new StringDeserializer(),
         new StringDeserializer()
     );
+
+//    errorHandler = new
   }
 
 
@@ -84,6 +90,21 @@ public class KStreamsClientFailureModeTest {
   @Test
   void testWriteToMissingTopic() {
     assertKafkaClusterReady();
+    // Create a new KStream Application
+    // kStream = new kStream<String, String> () {
+
+    StreamsBuilder streamsBuilder = new StreamsBuilder();
+
+    streamsBuilder.stream()
+
+    KafkaStreams kStreams = new KafkaStreams(builder.build, streamConfig);
+    kStreams.cleanUp();
+    kStreams.start();
+
+    // Create a new KStream Error Handler
+    kStreamErrorHandler = new StreamsUncaughtExceptionHandler() {
+
+    };
   }
 
   // --- Kafka Consumer Test Cases ------------------------------------------------------------------------
