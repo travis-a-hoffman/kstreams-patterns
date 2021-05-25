@@ -27,7 +27,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
-import org.apache.kafka.streams.kstream.StreamsUncaughtExceptionHandler;
+//import org.apache.kafka.streams.kstream.StreamsUncaughtExceptionHandler;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +50,7 @@ public class KStreamsClientFailureModeTest {
 
   private static KStream<String, String>         kStream;
 
-  private static StreamsUncaughtExceptionHandler kStreamErrorHandler;
+//  private static StreamsUncaughtExceptionHandler kStreamErrorHandler;
   private static final int defPartitions = 1;
   private static final short defReplication = 1;
 
@@ -93,9 +93,10 @@ public class KStreamsClientFailureModeTest {
     // Create a new KStream Application
     // kStream = new kStream<String, String> () {
 
+    /*
     StreamsBuilder streamsBuilder = new StreamsBuilder();
 
-    streamsBuilder.stream()
+    streamsBuilder.stream();
 
     KafkaStreams kStreams = new KafkaStreams(builder.build, streamConfig);
     kStreams.cleanUp();
@@ -105,6 +106,7 @@ public class KStreamsClientFailureModeTest {
     kStreamErrorHandler = new StreamsUncaughtExceptionHandler() {
 
     };
+     */
   }
 
   // --- Kafka Consumer Test Cases ------------------------------------------------------------------------
