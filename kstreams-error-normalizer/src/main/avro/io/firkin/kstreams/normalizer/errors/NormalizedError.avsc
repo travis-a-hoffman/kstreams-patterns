@@ -5,9 +5,55 @@
   "doc": "Model of a normalized error that may arise from a variety of sources. Errors should be mapped to this schema.",
   "fields": [
     {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "The timestamp of when the error occurred, in Unix epoch time UTC (required)"
+    },
+    {
+      "name": "event_datetime",
+      "type": {
+        "type": "string",
+        "logicalType": "datetime"
+      },
+      "doc": "The datetime of when the error occured, in GMT (required)"
+    },
+    {
       "name": "correlation_id",
-      "type": "string",
-      "doc": "Unique id for event tracing"
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Unique id for event tracing (required)"
+    },
+    {
+      "name": "environment_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Environment where the error took place (optional)"
+    },
+    {
+      "name": "application_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Application where the error took place (optional)"
+    },
+    {
+      "name": "instance_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Instance where the error took place (optional)"
     },
     {
       "name": "environment",
@@ -21,47 +67,82 @@
     {
       "name": "exception",
       "type": "string",
-      "doc": "Error information from the connector"
+      "doc": "Error information from the application"
     },
     {
       "name": "metadata",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": "string"
+        }
+      ],
+      "default": null,
+      "doc": "Metadata from the source system (optional)"
+    },
+    {
+      "name": "data",
+      "type": [
+        "null",
+        "bytes"
+      ],
+      "default": null,
+      "doc": "Data from the source system (optional)"
+    },
+    {
+      "name": "kafka_metadata",
       "type": {
         "type": "map",
         "values": "string"
       },
-      "doc": "Keys value pairs for any domain specific metadata"
+      "default": {},
+      "doc": "Metadata from the Kafka Record (required)"
     },
     {
-      "name": "source_message",
-      "type": "string",
-      "doc": "Message that caused the error"
-    },
-    {
-      "name": "source_message_schema_name",
-      "type": "string",
-      "doc": "Schema name of the source message"
-    },
-    {
-      "name": "source_message_offset",
-      "type": "int",
-      "doc": "Offset of the source message"
-    },
-    {
-      "name": "source_message_partition",
-      "type": "int",
-      "doc": "Partition of the source message"
-    },
-    {
-      "name": "source_topic",
-      "type": "string",
-      "doc": "Name of the topic the message was consumed from"
-    },
-    {
-      "name": "timestamp",
+      "name": "kafka_record",
       "type": {
-        "type": "int",
-        "logicalType": "date"
-      }
+        "type": "map",
+        "values": "bytes"
+      },
+      "default": {},
+      "doc": "The Record responsible for the error (required)"
+    },
+    {
+      "name": "kafka_schema",
+      "type": {
+        "type": "map",
+        "values": "string"
+      },
+      "default": {},
+      "doc": "Schema of the Record (required)"
+    },
+    {
+      "name": "kafka_data",
+      "type": {
+        "type": "map",
+        "values": "bytes"
+      },
+      "default": {},
+      "doc": "Additional data from Kafka (required)"
+    },
+    {
+      "name": "related_metadata",
+      "type": {
+        "type": "map",
+        "values": "string"
+      },
+      "default": {},
+      "doc": "Additional metadata from related systems (required)"
+    },
+    {
+      "name": "related_data",
+      "type": {
+        "type": "map",
+        "values": "bytes"
+      },
+      "default": {},
+      "doc": "Additional data from related systems (required)"
     }
   ]
 }

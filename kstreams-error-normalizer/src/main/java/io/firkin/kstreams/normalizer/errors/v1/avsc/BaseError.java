@@ -12,16 +12,16 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-/** Example Model for errors like those that might arise from a Source Connector. Errors of this type will need to be mapped to a common schema. */
+/** Example Model for errors like those which might arise from a Source Connector. Errors of this type will need to be mapped to a common schema. */
 @org.apache.avro.specific.AvroGenerated
 public class BaseError extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -2850240063251767128L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BaseError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avsc\",\"doc\":\"Example Model for errors like those that might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.\",\"default\":null}]}");
+  private static final long serialVersionUID = -3610031471014789177L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BaseError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avsc\",\"doc\":\"Example Model for errors like those which might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC (required)\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing (required)\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place (optional)\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place (optional)\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place (optional)\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\",\"default\":null}],\"doc\":\"Metadata from the source system (optional)\",\"default\":null},{\"name\":\"data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data from the source system (optional)\",\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
 static {
-    MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.LocalTimestampMillisConversion());
+    MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
   }
 
   private static final BinaryMessageEncoder<BaseError> ENCODER =
@@ -75,16 +75,20 @@ static {
     return DECODER.decode(b);
   }
 
-  /** The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime. */
-   private java.time.LocalDateTime timestamp;
-  /** Unique id for event tracing */
+  /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
+   private java.time.Instant timestamp;
+  /** Unique id for event tracing (required) */
    private java.lang.CharSequence correlation_id;
-  /** Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to. */
+  /** Environment where the error took place (optional) */
    private java.lang.CharSequence environment_id;
-  /** Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to. */
+  /** Application where the error took place (optional) */
    private java.lang.CharSequence application_id;
-  /** Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change. */
+  /** Instance where the error took place (optional) */
    private java.lang.CharSequence instance_id;
+  /** Metadata from the source system (optional) */
+   private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
+  /** Data from the source system (optional) */
+   private java.nio.ByteBuffer data;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -95,18 +99,22 @@ static {
 
   /**
    * All-args constructor.
-   * @param timestamp The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
-   * @param correlation_id Unique id for event tracing
-   * @param environment_id Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
-   * @param application_id Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
-   * @param instance_id Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+   * @param timestamp The timestamp of when the error occurred, in Unix epoch time UTC (required)
+   * @param correlation_id Unique id for event tracing (required)
+   * @param environment_id Environment where the error took place (optional)
+   * @param application_id Application where the error took place (optional)
+   * @param instance_id Instance where the error took place (optional)
+   * @param metadata Metadata from the source system (optional)
+   * @param data Data from the source system (optional)
    */
-  public BaseError(java.time.LocalDateTime timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id) {
-    this.timestamp = timestamp;
+  public BaseError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer data) {
+    this.timestamp = timestamp.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
     this.correlation_id = correlation_id;
     this.environment_id = environment_id;
     this.application_id = application_id;
     this.instance_id = instance_id;
+    this.metadata = metadata;
+    this.data = data;
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
@@ -119,13 +127,17 @@ static {
     case 2: return environment_id;
     case 3: return application_id;
     case 4: return instance_id;
+    case 5: return metadata;
+    case 6: return data;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
-      new org.apache.avro.data.TimeConversions.LocalTimestampMillisConversion(),
+      new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
+      null,
+      null,
       null,
       null,
       null,
@@ -142,36 +154,38 @@ static {
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: timestamp = (java.time.LocalDateTime)value$; break;
+    case 0: timestamp = (java.time.Instant)value$; break;
     case 1: correlation_id = (java.lang.CharSequence)value$; break;
     case 2: environment_id = (java.lang.CharSequence)value$; break;
     case 3: application_id = (java.lang.CharSequence)value$; break;
     case 4: instance_id = (java.lang.CharSequence)value$; break;
+    case 5: metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
+    case 6: data = (java.nio.ByteBuffer)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
    * Gets the value of the 'timestamp' field.
-   * @return The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
+   * @return The timestamp of when the error occurred, in Unix epoch time UTC (required)
    */
-  public java.time.LocalDateTime getTimestamp() {
+  public java.time.Instant getTimestamp() {
     return timestamp;
   }
 
 
   /**
    * Sets the value of the 'timestamp' field.
-   * The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
+   * The timestamp of when the error occurred, in Unix epoch time UTC (required)
    * @param value the value to set.
    */
-  public void setTimestamp(java.time.LocalDateTime value) {
-    this.timestamp = value;
+  public void setTimestamp(java.time.Instant value) {
+    this.timestamp = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
   }
 
   /**
    * Gets the value of the 'correlation_id' field.
-   * @return Unique id for event tracing
+   * @return Unique id for event tracing (required)
    */
   public java.lang.CharSequence getCorrelationId() {
     return correlation_id;
@@ -180,7 +194,7 @@ static {
 
   /**
    * Sets the value of the 'correlation_id' field.
-   * Unique id for event tracing
+   * Unique id for event tracing (required)
    * @param value the value to set.
    */
   public void setCorrelationId(java.lang.CharSequence value) {
@@ -189,7 +203,7 @@ static {
 
   /**
    * Gets the value of the 'environment_id' field.
-   * @return Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+   * @return Environment where the error took place (optional)
    */
   public java.lang.CharSequence getEnvironmentId() {
     return environment_id;
@@ -198,7 +212,7 @@ static {
 
   /**
    * Sets the value of the 'environment_id' field.
-   * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+   * Environment where the error took place (optional)
    * @param value the value to set.
    */
   public void setEnvironmentId(java.lang.CharSequence value) {
@@ -207,7 +221,7 @@ static {
 
   /**
    * Gets the value of the 'application_id' field.
-   * @return Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
+   * @return Application where the error took place (optional)
    */
   public java.lang.CharSequence getApplicationId() {
     return application_id;
@@ -216,7 +230,7 @@ static {
 
   /**
    * Sets the value of the 'application_id' field.
-   * Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
+   * Application where the error took place (optional)
    * @param value the value to set.
    */
   public void setApplicationId(java.lang.CharSequence value) {
@@ -225,7 +239,7 @@ static {
 
   /**
    * Gets the value of the 'instance_id' field.
-   * @return Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+   * @return Instance where the error took place (optional)
    */
   public java.lang.CharSequence getInstanceId() {
     return instance_id;
@@ -234,11 +248,47 @@ static {
 
   /**
    * Sets the value of the 'instance_id' field.
-   * Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+   * Instance where the error took place (optional)
    * @param value the value to set.
    */
   public void setInstanceId(java.lang.CharSequence value) {
     this.instance_id = value;
+  }
+
+  /**
+   * Gets the value of the 'metadata' field.
+   * @return Metadata from the source system (optional)
+   */
+  public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
+    return metadata;
+  }
+
+
+  /**
+   * Sets the value of the 'metadata' field.
+   * Metadata from the source system (optional)
+   * @param value the value to set.
+   */
+  public void setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+    this.metadata = value;
+  }
+
+  /**
+   * Gets the value of the 'data' field.
+   * @return Data from the source system (optional)
+   */
+  public java.nio.ByteBuffer getData() {
+    return data;
+  }
+
+
+  /**
+   * Sets the value of the 'data' field.
+   * Data from the source system (optional)
+   * @param value the value to set.
+   */
+  public void setData(java.nio.ByteBuffer value) {
+    this.data = value;
   }
 
   /**
@@ -282,16 +332,20 @@ static {
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<BaseError>
     implements org.apache.avro.data.RecordBuilder<BaseError> {
 
-    /** The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime. */
-    private java.time.LocalDateTime timestamp;
-    /** Unique id for event tracing */
+    /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
+    private java.time.Instant timestamp;
+    /** Unique id for event tracing (required) */
     private java.lang.CharSequence correlation_id;
-    /** Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to. */
+    /** Environment where the error took place (optional) */
     private java.lang.CharSequence environment_id;
-    /** Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to. */
+    /** Application where the error took place (optional) */
     private java.lang.CharSequence application_id;
-    /** Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change. */
+    /** Instance where the error took place (optional) */
     private java.lang.CharSequence instance_id;
+    /** Metadata from the source system (optional) */
+    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
+    /** Data from the source system (optional) */
+    private java.nio.ByteBuffer data;
 
     /** Creates a new Builder */
     private Builder() {
@@ -324,6 +378,14 @@ static {
         this.instance_id = data().deepCopy(fields()[4].schema(), other.instance_id);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
+      if (isValidValue(fields()[5], other.metadata)) {
+        this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
+      }
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
+      }
     }
 
     /**
@@ -352,34 +414,42 @@ static {
         this.instance_id = data().deepCopy(fields()[4].schema(), other.instance_id);
         fieldSetFlags()[4] = true;
       }
+      if (isValidValue(fields()[5], other.metadata)) {
+        this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
+        fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
+        fieldSetFlags()[6] = true;
+      }
     }
 
     /**
       * Gets the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return The value.
       */
-    public java.time.LocalDateTime getTimestamp() {
+    public java.time.Instant getTimestamp() {
       return timestamp;
     }
 
 
     /**
       * Sets the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder setTimestamp(java.time.LocalDateTime value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder setTimestamp(java.time.Instant value) {
       validate(fields()[0], value);
-      this.timestamp = value;
+      this.timestamp = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
       fieldSetFlags()[0] = true;
       return this;
     }
 
     /**
       * Checks whether the 'timestamp' field has been set.
-      * The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return True if the 'timestamp' field has been set, false otherwise.
       */
     public boolean hasTimestamp() {
@@ -389,7 +459,7 @@ static {
 
     /**
       * Clears the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix Epoch time on the error source system. In the NormalizedError, we want to track the wall-clock time as a UTC datetime.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearTimestamp() {
@@ -399,7 +469,7 @@ static {
 
     /**
       * Gets the value of the 'correlation_id' field.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @return The value.
       */
     public java.lang.CharSequence getCorrelationId() {
@@ -409,7 +479,7 @@ static {
 
     /**
       * Sets the value of the 'correlation_id' field.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @param value The value of 'correlation_id'.
       * @return This builder.
       */
@@ -422,7 +492,7 @@ static {
 
     /**
       * Checks whether the 'correlation_id' field has been set.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @return True if the 'correlation_id' field has been set, false otherwise.
       */
     public boolean hasCorrelationId() {
@@ -432,7 +502,7 @@ static {
 
     /**
       * Clears the value of the 'correlation_id' field.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearCorrelationId() {
@@ -443,7 +513,7 @@ static {
 
     /**
       * Gets the value of the 'environment_id' field.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+      * Environment where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getEnvironmentId() {
@@ -453,7 +523,7 @@ static {
 
     /**
       * Sets the value of the 'environment_id' field.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+      * Environment where the error took place (optional)
       * @param value The value of 'environment_id'.
       * @return This builder.
       */
@@ -466,7 +536,7 @@ static {
 
     /**
       * Checks whether the 'environment_id' field has been set.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+      * Environment where the error took place (optional)
       * @return True if the 'environment_id' field has been set, false otherwise.
       */
     public boolean hasEnvironmentId() {
@@ -476,7 +546,7 @@ static {
 
     /**
       * Clears the value of the 'environment_id' field.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+      * Environment where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearEnvironmentId() {
@@ -487,7 +557,7 @@ static {
 
     /**
       * Gets the value of the 'application_id' field.
-      * Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
+      * Application where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getApplicationId() {
@@ -497,7 +567,7 @@ static {
 
     /**
       * Sets the value of the 'application_id' field.
-      * Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
+      * Application where the error took place (optional)
       * @param value The value of 'application_id'.
       * @return This builder.
       */
@@ -510,7 +580,7 @@ static {
 
     /**
       * Checks whether the 'application_id' field has been set.
-      * Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
+      * Application where the error took place (optional)
       * @return True if the 'application_id' field has been set, false otherwise.
       */
     public boolean hasApplicationId() {
@@ -520,7 +590,7 @@ static {
 
     /**
       * Clears the value of the 'application_id' field.
-      * Application where the error took place. In this object, the application can be any string. In NormalizedError, there is an well known list of applications which it needs to be mapped to.
+      * Application where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearApplicationId() {
@@ -531,7 +601,7 @@ static {
 
     /**
       * Gets the value of the 'instance_id' field.
-      * Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+      * Instance where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getInstanceId() {
@@ -541,7 +611,7 @@ static {
 
     /**
       * Sets the value of the 'instance_id' field.
-      * Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+      * Instance where the error took place (optional)
       * @param value The value of 'instance_id'.
       * @return This builder.
       */
@@ -554,7 +624,7 @@ static {
 
     /**
       * Checks whether the 'instance_id' field has been set.
-      * Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+      * Instance where the error took place (optional)
       * @return True if the 'instance_id' field has been set, false otherwise.
       */
     public boolean hasInstanceId() {
@@ -564,7 +634,7 @@ static {
 
     /**
       * Clears the value of the 'instance_id' field.
-      * Instance where the error took place. In this object, the environment can be any string. In NormalizedError, there is no change.
+      * Instance where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearInstanceId() {
@@ -573,16 +643,106 @@ static {
       return this;
     }
 
+    /**
+      * Gets the value of the 'metadata' field.
+      * Metadata from the source system (optional)
+      * @return The value.
+      */
+    public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
+      return metadata;
+    }
+
+
+    /**
+      * Sets the value of the 'metadata' field.
+      * Metadata from the source system (optional)
+      * @param value The value of 'metadata'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+      validate(fields()[5], value);
+      this.metadata = value;
+      fieldSetFlags()[5] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'metadata' field has been set.
+      * Metadata from the source system (optional)
+      * @return True if the 'metadata' field has been set, false otherwise.
+      */
+    public boolean hasMetadata() {
+      return fieldSetFlags()[5];
+    }
+
+
+    /**
+      * Clears the value of the 'metadata' field.
+      * Metadata from the source system (optional)
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearMetadata() {
+      metadata = null;
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'data' field.
+      * Data from the source system (optional)
+      * @return The value.
+      */
+    public java.nio.ByteBuffer getData() {
+      return data;
+    }
+
+
+    /**
+      * Sets the value of the 'data' field.
+      * Data from the source system (optional)
+      * @param value The value of 'data'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder setData(java.nio.ByteBuffer value) {
+      validate(fields()[6], value);
+      this.data = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'data' field has been set.
+      * Data from the source system (optional)
+      * @return True if the 'data' field has been set, false otherwise.
+      */
+    public boolean hasData() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'data' field.
+      * Data from the source system (optional)
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.BaseError.Builder clearData() {
+      data = null;
+      fieldSetFlags()[6] = false;
+      return this;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public BaseError build() {
       try {
         BaseError record = new BaseError();
-        record.timestamp = fieldSetFlags()[0] ? this.timestamp : (java.time.LocalDateTime) defaultValue(fields()[0]);
+        record.timestamp = fieldSetFlags()[0] ? this.timestamp : (java.time.Instant) defaultValue(fields()[0]);
         record.correlation_id = fieldSetFlags()[1] ? this.correlation_id : (java.lang.CharSequence) defaultValue(fields()[1]);
         record.environment_id = fieldSetFlags()[2] ? this.environment_id : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.application_id = fieldSetFlags()[3] ? this.application_id : (java.lang.CharSequence) defaultValue(fields()[3]);
         record.instance_id = fieldSetFlags()[4] ? this.instance_id : (java.lang.CharSequence) defaultValue(fields()[4]);
+        record.metadata = fieldSetFlags()[5] ? this.metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[5]);
+        record.data = fieldSetFlags()[6] ? this.data : (java.nio.ByteBuffer) defaultValue(fields()[6]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;

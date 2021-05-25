@@ -12,12 +12,12 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-/** * Example Error Model which comes from a sink system. This error comes from
-     * a Sink which reads from a Topic, using the record to perform an action. */
+/** Example Error Model which comes from a sink system. This error comes from a
+     Sink which reads from a Topic, using the record to perform an action. */
 @org.apache.avro.specific.AvroGenerated
 public class ExampleTwoError extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 3348274997989136075L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ExampleTwoError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"* Example Error Model which comes from a sink system. This error comes from\\n     * a Sink which reads from a Topic, using the record to perform an action.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC.\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing. A required field.\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"(optional) Environment where the error took place.\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"(optional) Application where the error took place.\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"(optional) Instance of the Application where the error took place.\",\"default\":null},{\"name\":\"downstream_metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"(optional) Metadata from the source system. Can be missing\",\"default\":null},{\"name\":\"original_record\",\"type\":\"bytes\",\"doc\":\"(required) original record which caused the error.\"},{\"name\":\"related_data\",\"type\":{\"type\":\"map\",\"values\":\"bytes\"},\"default\":{}},{\"name\":\"upstream_topic\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"upstream_cluster\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"source_topic\",\"type\":[\"null\",\"string\"],\"default\":null}],\"aliases\":[\"BaseError\"]}");
+  private static final long serialVersionUID = -5635983150520741571L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ExampleTwoError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"Example Error Model which comes from a sink system. This error comes from a\\n     Sink which reads from a Topic, using the record to perform an action.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC (required)\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing (required)\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place (optional)\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place (optional)\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place (optional)\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"Metadata from the source system (optional)\",\"default\":null},{\"name\":\"data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data from the source system (optional)\",\"default\":null},{\"name\":\"downstream_metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"(optional) Metadata from the source system. Can be missing\",\"default\":null},{\"name\":\"original_record\",\"type\":\"bytes\",\"doc\":\"(required) original record which caused the error.\"},{\"name\":\"related_data\",\"type\":{\"type\":\"map\",\"values\":\"bytes\"},\"default\":{}},{\"name\":\"upstream_topic\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"upstream_cluster\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"source_topic\",\"type\":[\"null\",\"string\"],\"default\":null}],\"aliases\":[\"BaseError\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -76,16 +76,20 @@ static {
     return DECODER.decode(b);
   }
 
-  /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+  /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
    private java.time.Instant timestamp;
-  /** Unique id for event tracing. A required field. */
+  /** Unique id for event tracing (required) */
    private java.lang.CharSequence correlation_id;
-  /** (optional) Environment where the error took place. */
+  /** Environment where the error took place (optional) */
    private java.lang.CharSequence environment_id;
-  /** (optional) Application where the error took place. */
+  /** Application where the error took place (optional) */
    private java.lang.CharSequence application_id;
-  /** (optional) Instance of the Application where the error took place. */
+  /** Instance where the error took place (optional) */
    private java.lang.CharSequence instance_id;
+  /** Metadata from the source system (optional) */
+   private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
+  /** Data from the source system (optional) */
+   private java.nio.ByteBuffer data;
   /** (optional) Metadata from the source system. Can be missing */
    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> downstream_metadata;
   /** (required) original record which caused the error. */
@@ -104,11 +108,13 @@ static {
 
   /**
    * All-args constructor.
-   * @param timestamp The timestamp of when the error occurred, in Unix epoch time UTC.
-   * @param correlation_id Unique id for event tracing. A required field.
-   * @param environment_id (optional) Environment where the error took place.
-   * @param application_id (optional) Application where the error took place.
-   * @param instance_id (optional) Instance of the Application where the error took place.
+   * @param timestamp The timestamp of when the error occurred, in Unix epoch time UTC (required)
+   * @param correlation_id Unique id for event tracing (required)
+   * @param environment_id Environment where the error took place (optional)
+   * @param application_id Application where the error took place (optional)
+   * @param instance_id Instance where the error took place (optional)
+   * @param metadata Metadata from the source system (optional)
+   * @param data Data from the source system (optional)
    * @param downstream_metadata (optional) Metadata from the source system. Can be missing
    * @param original_record (required) original record which caused the error.
    * @param related_data The new value for related_data
@@ -116,12 +122,14 @@ static {
    * @param upstream_cluster The new value for upstream_cluster
    * @param source_topic The new value for source_topic
    */
-  public ExampleTwoError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> downstream_metadata, java.nio.ByteBuffer original_record, java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer> related_data, java.lang.CharSequence upstream_topic, java.lang.CharSequence upstream_cluster, java.lang.CharSequence source_topic) {
+  public ExampleTwoError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer data, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> downstream_metadata, java.nio.ByteBuffer original_record, java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer> related_data, java.lang.CharSequence upstream_topic, java.lang.CharSequence upstream_cluster, java.lang.CharSequence source_topic) {
     this.timestamp = timestamp.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
     this.correlation_id = correlation_id;
     this.environment_id = environment_id;
     this.application_id = application_id;
     this.instance_id = instance_id;
+    this.metadata = metadata;
+    this.data = data;
     this.downstream_metadata = downstream_metadata;
     this.original_record = original_record;
     this.related_data = related_data;
@@ -140,12 +148,14 @@ static {
     case 2: return environment_id;
     case 3: return application_id;
     case 4: return instance_id;
-    case 5: return downstream_metadata;
-    case 6: return original_record;
-    case 7: return related_data;
-    case 8: return upstream_topic;
-    case 9: return upstream_cluster;
-    case 10: return source_topic;
+    case 5: return metadata;
+    case 6: return data;
+    case 7: return downstream_metadata;
+    case 8: return original_record;
+    case 9: return related_data;
+    case 10: return upstream_topic;
+    case 11: return upstream_cluster;
+    case 12: return source_topic;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -153,6 +163,8 @@ static {
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
       new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
+      null,
+      null,
       null,
       null,
       null,
@@ -180,19 +192,21 @@ static {
     case 2: environment_id = (java.lang.CharSequence)value$; break;
     case 3: application_id = (java.lang.CharSequence)value$; break;
     case 4: instance_id = (java.lang.CharSequence)value$; break;
-    case 5: downstream_metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
-    case 6: original_record = (java.nio.ByteBuffer)value$; break;
-    case 7: related_data = (java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer>)value$; break;
-    case 8: upstream_topic = (java.lang.CharSequence)value$; break;
-    case 9: upstream_cluster = (java.lang.CharSequence)value$; break;
-    case 10: source_topic = (java.lang.CharSequence)value$; break;
+    case 5: metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
+    case 6: data = (java.nio.ByteBuffer)value$; break;
+    case 7: downstream_metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
+    case 8: original_record = (java.nio.ByteBuffer)value$; break;
+    case 9: related_data = (java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer>)value$; break;
+    case 10: upstream_topic = (java.lang.CharSequence)value$; break;
+    case 11: upstream_cluster = (java.lang.CharSequence)value$; break;
+    case 12: source_topic = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
    * Gets the value of the 'timestamp' field.
-   * @return The timestamp of when the error occurred, in Unix epoch time UTC.
+   * @return The timestamp of when the error occurred, in Unix epoch time UTC (required)
    */
   public java.time.Instant getTimestamp() {
     return timestamp;
@@ -201,7 +215,7 @@ static {
 
   /**
    * Sets the value of the 'timestamp' field.
-   * The timestamp of when the error occurred, in Unix epoch time UTC.
+   * The timestamp of when the error occurred, in Unix epoch time UTC (required)
    * @param value the value to set.
    */
   public void setTimestamp(java.time.Instant value) {
@@ -210,7 +224,7 @@ static {
 
   /**
    * Gets the value of the 'correlation_id' field.
-   * @return Unique id for event tracing. A required field.
+   * @return Unique id for event tracing (required)
    */
   public java.lang.CharSequence getCorrelationId() {
     return correlation_id;
@@ -219,7 +233,7 @@ static {
 
   /**
    * Sets the value of the 'correlation_id' field.
-   * Unique id for event tracing. A required field.
+   * Unique id for event tracing (required)
    * @param value the value to set.
    */
   public void setCorrelationId(java.lang.CharSequence value) {
@@ -228,7 +242,7 @@ static {
 
   /**
    * Gets the value of the 'environment_id' field.
-   * @return (optional) Environment where the error took place.
+   * @return Environment where the error took place (optional)
    */
   public java.lang.CharSequence getEnvironmentId() {
     return environment_id;
@@ -237,7 +251,7 @@ static {
 
   /**
    * Sets the value of the 'environment_id' field.
-   * (optional) Environment where the error took place.
+   * Environment where the error took place (optional)
    * @param value the value to set.
    */
   public void setEnvironmentId(java.lang.CharSequence value) {
@@ -246,7 +260,7 @@ static {
 
   /**
    * Gets the value of the 'application_id' field.
-   * @return (optional) Application where the error took place.
+   * @return Application where the error took place (optional)
    */
   public java.lang.CharSequence getApplicationId() {
     return application_id;
@@ -255,7 +269,7 @@ static {
 
   /**
    * Sets the value of the 'application_id' field.
-   * (optional) Application where the error took place.
+   * Application where the error took place (optional)
    * @param value the value to set.
    */
   public void setApplicationId(java.lang.CharSequence value) {
@@ -264,7 +278,7 @@ static {
 
   /**
    * Gets the value of the 'instance_id' field.
-   * @return (optional) Instance of the Application where the error took place.
+   * @return Instance where the error took place (optional)
    */
   public java.lang.CharSequence getInstanceId() {
     return instance_id;
@@ -273,11 +287,47 @@ static {
 
   /**
    * Sets the value of the 'instance_id' field.
-   * (optional) Instance of the Application where the error took place.
+   * Instance where the error took place (optional)
    * @param value the value to set.
    */
   public void setInstanceId(java.lang.CharSequence value) {
     this.instance_id = value;
+  }
+
+  /**
+   * Gets the value of the 'metadata' field.
+   * @return Metadata from the source system (optional)
+   */
+  public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
+    return metadata;
+  }
+
+
+  /**
+   * Sets the value of the 'metadata' field.
+   * Metadata from the source system (optional)
+   * @param value the value to set.
+   */
+  public void setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+    this.metadata = value;
+  }
+
+  /**
+   * Gets the value of the 'data' field.
+   * @return Data from the source system (optional)
+   */
+  public java.nio.ByteBuffer getData() {
+    return data;
+  }
+
+
+  /**
+   * Sets the value of the 'data' field.
+   * Data from the source system (optional)
+   * @param value the value to set.
+   */
+  public void setData(java.nio.ByteBuffer value) {
+    this.data = value;
   }
 
   /**
@@ -425,16 +475,20 @@ static {
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ExampleTwoError>
     implements org.apache.avro.data.RecordBuilder<ExampleTwoError> {
 
-    /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+    /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
     private java.time.Instant timestamp;
-    /** Unique id for event tracing. A required field. */
+    /** Unique id for event tracing (required) */
     private java.lang.CharSequence correlation_id;
-    /** (optional) Environment where the error took place. */
+    /** Environment where the error took place (optional) */
     private java.lang.CharSequence environment_id;
-    /** (optional) Application where the error took place. */
+    /** Application where the error took place (optional) */
     private java.lang.CharSequence application_id;
-    /** (optional) Instance of the Application where the error took place. */
+    /** Instance where the error took place (optional) */
     private java.lang.CharSequence instance_id;
+    /** Metadata from the source system (optional) */
+    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
+    /** Data from the source system (optional) */
+    private java.nio.ByteBuffer data;
     /** (optional) Metadata from the source system. Can be missing */
     private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> downstream_metadata;
     /** (required) original record which caused the error. */
@@ -475,29 +529,37 @@ static {
         this.instance_id = data().deepCopy(fields()[4].schema(), other.instance_id);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.downstream_metadata)) {
-        this.downstream_metadata = data().deepCopy(fields()[5].schema(), other.downstream_metadata);
+      if (isValidValue(fields()[5], other.metadata)) {
+        this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.original_record)) {
-        this.original_record = data().deepCopy(fields()[6].schema(), other.original_record);
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
-      if (isValidValue(fields()[7], other.related_data)) {
-        this.related_data = data().deepCopy(fields()[7].schema(), other.related_data);
+      if (isValidValue(fields()[7], other.downstream_metadata)) {
+        this.downstream_metadata = data().deepCopy(fields()[7].schema(), other.downstream_metadata);
         fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
-      if (isValidValue(fields()[8], other.upstream_topic)) {
-        this.upstream_topic = data().deepCopy(fields()[8].schema(), other.upstream_topic);
+      if (isValidValue(fields()[8], other.original_record)) {
+        this.original_record = data().deepCopy(fields()[8].schema(), other.original_record);
         fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
-      if (isValidValue(fields()[9], other.upstream_cluster)) {
-        this.upstream_cluster = data().deepCopy(fields()[9].schema(), other.upstream_cluster);
+      if (isValidValue(fields()[9], other.related_data)) {
+        this.related_data = data().deepCopy(fields()[9].schema(), other.related_data);
         fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
-      if (isValidValue(fields()[10], other.source_topic)) {
-        this.source_topic = data().deepCopy(fields()[10].schema(), other.source_topic);
+      if (isValidValue(fields()[10], other.upstream_topic)) {
+        this.upstream_topic = data().deepCopy(fields()[10].schema(), other.upstream_topic);
         fieldSetFlags()[10] = other.fieldSetFlags()[10];
+      }
+      if (isValidValue(fields()[11], other.upstream_cluster)) {
+        this.upstream_cluster = data().deepCopy(fields()[11].schema(), other.upstream_cluster);
+        fieldSetFlags()[11] = other.fieldSetFlags()[11];
+      }
+      if (isValidValue(fields()[12], other.source_topic)) {
+        this.source_topic = data().deepCopy(fields()[12].schema(), other.source_topic);
+        fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
     }
 
@@ -527,35 +589,43 @@ static {
         this.instance_id = data().deepCopy(fields()[4].schema(), other.instance_id);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.downstream_metadata)) {
-        this.downstream_metadata = data().deepCopy(fields()[5].schema(), other.downstream_metadata);
+      if (isValidValue(fields()[5], other.metadata)) {
+        this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.original_record)) {
-        this.original_record = data().deepCopy(fields()[6].schema(), other.original_record);
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.related_data)) {
-        this.related_data = data().deepCopy(fields()[7].schema(), other.related_data);
+      if (isValidValue(fields()[7], other.downstream_metadata)) {
+        this.downstream_metadata = data().deepCopy(fields()[7].schema(), other.downstream_metadata);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.upstream_topic)) {
-        this.upstream_topic = data().deepCopy(fields()[8].schema(), other.upstream_topic);
+      if (isValidValue(fields()[8], other.original_record)) {
+        this.original_record = data().deepCopy(fields()[8].schema(), other.original_record);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.upstream_cluster)) {
-        this.upstream_cluster = data().deepCopy(fields()[9].schema(), other.upstream_cluster);
+      if (isValidValue(fields()[9], other.related_data)) {
+        this.related_data = data().deepCopy(fields()[9].schema(), other.related_data);
         fieldSetFlags()[9] = true;
       }
-      if (isValidValue(fields()[10], other.source_topic)) {
-        this.source_topic = data().deepCopy(fields()[10].schema(), other.source_topic);
+      if (isValidValue(fields()[10], other.upstream_topic)) {
+        this.upstream_topic = data().deepCopy(fields()[10].schema(), other.upstream_topic);
         fieldSetFlags()[10] = true;
+      }
+      if (isValidValue(fields()[11], other.upstream_cluster)) {
+        this.upstream_cluster = data().deepCopy(fields()[11].schema(), other.upstream_cluster);
+        fieldSetFlags()[11] = true;
+      }
+      if (isValidValue(fields()[12], other.source_topic)) {
+        this.source_topic = data().deepCopy(fields()[12].schema(), other.source_topic);
+        fieldSetFlags()[12] = true;
       }
     }
 
     /**
       * Gets the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return The value.
       */
     public java.time.Instant getTimestamp() {
@@ -565,7 +635,7 @@ static {
 
     /**
       * Sets the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
@@ -578,7 +648,7 @@ static {
 
     /**
       * Checks whether the 'timestamp' field has been set.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return True if the 'timestamp' field has been set, false otherwise.
       */
     public boolean hasTimestamp() {
@@ -588,7 +658,7 @@ static {
 
     /**
       * Clears the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearTimestamp() {
@@ -598,7 +668,7 @@ static {
 
     /**
       * Gets the value of the 'correlation_id' field.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @return The value.
       */
     public java.lang.CharSequence getCorrelationId() {
@@ -608,7 +678,7 @@ static {
 
     /**
       * Sets the value of the 'correlation_id' field.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @param value The value of 'correlation_id'.
       * @return This builder.
       */
@@ -621,7 +691,7 @@ static {
 
     /**
       * Checks whether the 'correlation_id' field has been set.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @return True if the 'correlation_id' field has been set, false otherwise.
       */
     public boolean hasCorrelationId() {
@@ -631,7 +701,7 @@ static {
 
     /**
       * Clears the value of the 'correlation_id' field.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearCorrelationId() {
@@ -642,7 +712,7 @@ static {
 
     /**
       * Gets the value of the 'environment_id' field.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getEnvironmentId() {
@@ -652,7 +722,7 @@ static {
 
     /**
       * Sets the value of the 'environment_id' field.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @param value The value of 'environment_id'.
       * @return This builder.
       */
@@ -665,7 +735,7 @@ static {
 
     /**
       * Checks whether the 'environment_id' field has been set.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @return True if the 'environment_id' field has been set, false otherwise.
       */
     public boolean hasEnvironmentId() {
@@ -675,7 +745,7 @@ static {
 
     /**
       * Clears the value of the 'environment_id' field.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearEnvironmentId() {
@@ -686,7 +756,7 @@ static {
 
     /**
       * Gets the value of the 'application_id' field.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getApplicationId() {
@@ -696,7 +766,7 @@ static {
 
     /**
       * Sets the value of the 'application_id' field.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @param value The value of 'application_id'.
       * @return This builder.
       */
@@ -709,7 +779,7 @@ static {
 
     /**
       * Checks whether the 'application_id' field has been set.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @return True if the 'application_id' field has been set, false otherwise.
       */
     public boolean hasApplicationId() {
@@ -719,7 +789,7 @@ static {
 
     /**
       * Clears the value of the 'application_id' field.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearApplicationId() {
@@ -730,7 +800,7 @@ static {
 
     /**
       * Gets the value of the 'instance_id' field.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getInstanceId() {
@@ -740,7 +810,7 @@ static {
 
     /**
       * Sets the value of the 'instance_id' field.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @param value The value of 'instance_id'.
       * @return This builder.
       */
@@ -753,7 +823,7 @@ static {
 
     /**
       * Checks whether the 'instance_id' field has been set.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @return True if the 'instance_id' field has been set, false otherwise.
       */
     public boolean hasInstanceId() {
@@ -763,12 +833,100 @@ static {
 
     /**
       * Clears the value of the 'instance_id' field.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearInstanceId() {
       instance_id = null;
       fieldSetFlags()[4] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'metadata' field.
+      * Metadata from the source system (optional)
+      * @return The value.
+      */
+    public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
+      return metadata;
+    }
+
+
+    /**
+      * Sets the value of the 'metadata' field.
+      * Metadata from the source system (optional)
+      * @param value The value of 'metadata'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+      validate(fields()[5], value);
+      this.metadata = value;
+      fieldSetFlags()[5] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'metadata' field has been set.
+      * Metadata from the source system (optional)
+      * @return True if the 'metadata' field has been set, false otherwise.
+      */
+    public boolean hasMetadata() {
+      return fieldSetFlags()[5];
+    }
+
+
+    /**
+      * Clears the value of the 'metadata' field.
+      * Metadata from the source system (optional)
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearMetadata() {
+      metadata = null;
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'data' field.
+      * Data from the source system (optional)
+      * @return The value.
+      */
+    public java.nio.ByteBuffer getData() {
+      return data;
+    }
+
+
+    /**
+      * Sets the value of the 'data' field.
+      * Data from the source system (optional)
+      * @param value The value of 'data'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setData(java.nio.ByteBuffer value) {
+      validate(fields()[6], value);
+      this.data = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'data' field has been set.
+      * Data from the source system (optional)
+      * @return True if the 'data' field has been set, false otherwise.
+      */
+    public boolean hasData() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'data' field.
+      * Data from the source system (optional)
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearData() {
+      data = null;
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -789,9 +947,9 @@ static {
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setDownstreamMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
-      validate(fields()[5], value);
+      validate(fields()[7], value);
       this.downstream_metadata = value;
-      fieldSetFlags()[5] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -801,7 +959,7 @@ static {
       * @return True if the 'downstream_metadata' field has been set, false otherwise.
       */
     public boolean hasDownstreamMetadata() {
-      return fieldSetFlags()[5];
+      return fieldSetFlags()[7];
     }
 
 
@@ -812,7 +970,7 @@ static {
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearDownstreamMetadata() {
       downstream_metadata = null;
-      fieldSetFlags()[5] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -833,9 +991,9 @@ static {
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setOriginalRecord(java.nio.ByteBuffer value) {
-      validate(fields()[6], value);
+      validate(fields()[8], value);
       this.original_record = value;
-      fieldSetFlags()[6] = true;
+      fieldSetFlags()[8] = true;
       return this;
     }
 
@@ -845,7 +1003,7 @@ static {
       * @return True if the 'original_record' field has been set, false otherwise.
       */
     public boolean hasOriginalRecord() {
-      return fieldSetFlags()[6];
+      return fieldSetFlags()[8];
     }
 
 
@@ -856,7 +1014,7 @@ static {
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearOriginalRecord() {
       original_record = null;
-      fieldSetFlags()[6] = false;
+      fieldSetFlags()[8] = false;
       return this;
     }
 
@@ -875,9 +1033,9 @@ static {
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setRelatedData(java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer> value) {
-      validate(fields()[7], value);
+      validate(fields()[9], value);
       this.related_data = value;
-      fieldSetFlags()[7] = true;
+      fieldSetFlags()[9] = true;
       return this;
     }
 
@@ -886,7 +1044,7 @@ static {
       * @return True if the 'related_data' field has been set, false otherwise.
       */
     public boolean hasRelatedData() {
-      return fieldSetFlags()[7];
+      return fieldSetFlags()[9];
     }
 
 
@@ -896,7 +1054,7 @@ static {
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearRelatedData() {
       related_data = null;
-      fieldSetFlags()[7] = false;
+      fieldSetFlags()[9] = false;
       return this;
     }
 
@@ -915,9 +1073,9 @@ static {
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setUpstreamTopic(java.lang.CharSequence value) {
-      validate(fields()[8], value);
+      validate(fields()[10], value);
       this.upstream_topic = value;
-      fieldSetFlags()[8] = true;
+      fieldSetFlags()[10] = true;
       return this;
     }
 
@@ -926,7 +1084,7 @@ static {
       * @return True if the 'upstream_topic' field has been set, false otherwise.
       */
     public boolean hasUpstreamTopic() {
-      return fieldSetFlags()[8];
+      return fieldSetFlags()[10];
     }
 
 
@@ -936,7 +1094,7 @@ static {
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearUpstreamTopic() {
       upstream_topic = null;
-      fieldSetFlags()[8] = false;
+      fieldSetFlags()[10] = false;
       return this;
     }
 
@@ -955,9 +1113,9 @@ static {
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setUpstreamCluster(java.lang.CharSequence value) {
-      validate(fields()[9], value);
+      validate(fields()[11], value);
       this.upstream_cluster = value;
-      fieldSetFlags()[9] = true;
+      fieldSetFlags()[11] = true;
       return this;
     }
 
@@ -966,7 +1124,7 @@ static {
       * @return True if the 'upstream_cluster' field has been set, false otherwise.
       */
     public boolean hasUpstreamCluster() {
-      return fieldSetFlags()[9];
+      return fieldSetFlags()[11];
     }
 
 
@@ -976,7 +1134,7 @@ static {
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearUpstreamCluster() {
       upstream_cluster = null;
-      fieldSetFlags()[9] = false;
+      fieldSetFlags()[11] = false;
       return this;
     }
 
@@ -995,9 +1153,9 @@ static {
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder setSourceTopic(java.lang.CharSequence value) {
-      validate(fields()[10], value);
+      validate(fields()[12], value);
       this.source_topic = value;
-      fieldSetFlags()[10] = true;
+      fieldSetFlags()[12] = true;
       return this;
     }
 
@@ -1006,7 +1164,7 @@ static {
       * @return True if the 'source_topic' field has been set, false otherwise.
       */
     public boolean hasSourceTopic() {
-      return fieldSetFlags()[10];
+      return fieldSetFlags()[12];
     }
 
 
@@ -1016,7 +1174,7 @@ static {
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.ExampleTwoError.Builder clearSourceTopic() {
       source_topic = null;
-      fieldSetFlags()[10] = false;
+      fieldSetFlags()[12] = false;
       return this;
     }
 
@@ -1030,12 +1188,14 @@ static {
         record.environment_id = fieldSetFlags()[2] ? this.environment_id : (java.lang.CharSequence) defaultValue(fields()[2]);
         record.application_id = fieldSetFlags()[3] ? this.application_id : (java.lang.CharSequence) defaultValue(fields()[3]);
         record.instance_id = fieldSetFlags()[4] ? this.instance_id : (java.lang.CharSequence) defaultValue(fields()[4]);
-        record.downstream_metadata = fieldSetFlags()[5] ? this.downstream_metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[5]);
-        record.original_record = fieldSetFlags()[6] ? this.original_record : (java.nio.ByteBuffer) defaultValue(fields()[6]);
-        record.related_data = fieldSetFlags()[7] ? this.related_data : (java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer>) defaultValue(fields()[7]);
-        record.upstream_topic = fieldSetFlags()[8] ? this.upstream_topic : (java.lang.CharSequence) defaultValue(fields()[8]);
-        record.upstream_cluster = fieldSetFlags()[9] ? this.upstream_cluster : (java.lang.CharSequence) defaultValue(fields()[9]);
-        record.source_topic = fieldSetFlags()[10] ? this.source_topic : (java.lang.CharSequence) defaultValue(fields()[10]);
+        record.metadata = fieldSetFlags()[5] ? this.metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[5]);
+        record.data = fieldSetFlags()[6] ? this.data : (java.nio.ByteBuffer) defaultValue(fields()[6]);
+        record.downstream_metadata = fieldSetFlags()[7] ? this.downstream_metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[7]);
+        record.original_record = fieldSetFlags()[8] ? this.original_record : (java.nio.ByteBuffer) defaultValue(fields()[8]);
+        record.related_data = fieldSetFlags()[9] ? this.related_data : (java.util.Map<java.lang.CharSequence,java.nio.ByteBuffer>) defaultValue(fields()[9]);
+        record.upstream_topic = fieldSetFlags()[10] ? this.upstream_topic : (java.lang.CharSequence) defaultValue(fields()[10]);
+        record.upstream_cluster = fieldSetFlags()[11] ? this.upstream_cluster : (java.lang.CharSequence) defaultValue(fields()[11]);
+        record.source_topic = fieldSetFlags()[12] ? this.source_topic : (java.lang.CharSequence) defaultValue(fields()[12]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;

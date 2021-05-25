@@ -12,13 +12,13 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-/** * Records and Errors are more-or-less identical, they generate very similar code. In
-     * Java, error types will extend a Throwable, and include a value + cause in the object.
-     * The cause is not */
+/** Records and Errors are more-or-less identical, they generate very similar code. In
+     Java, error types will extend a Throwable, and include a value + cause in the object.
+     The cause is not */
 @org.apache.avro.specific.AvroGenerated
 public class HelloRecord extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = 8061622045392156420L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"HelloRecord\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"* Records and Errors are more-or-less identical, they generate very similar code. In\\n     * Java, error types will extend a Throwable, and include a value + cause in the object.\\n     * The cause is not\",\"fields\":[{\"name\":\"message\",\"type\":\"string\",\"doc\":\"Message to send.\",\"default\":\"Hello, World!\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"HelloRecord\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"Records and Errors are more-or-less identical, they generate very similar code. In\\n     Java, error types will extend a Throwable, and include a value + cause in the object.\\n     The cause is not\",\"fields\":[{\"name\":\"message\",\"type\":\"string\",\"doc\":\"Message to send.\",\"default\":\"Hello, World!\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();

@@ -1,8 +1,7 @@
 {
   "type": "record",
-  "aliases": ["BaseError"],
   "namespace": "io.firkin.kstreams.normalizer.errors.v1.avsc",
-  "name": "ExampleOneError",
+  "name": "BaseError",
   "doc": "Example Model for errors like those which might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.",
   "fields": [
     {
@@ -69,72 +68,6 @@
       ],
       "default": null,
       "doc": "Data from the source system (optional)"
-    },
-    {
-      "name": "upstream_metadata",
-      "type": [
-        "null",
-        {
-          "type": "map",
-          "values": "string"
-        }
-      ],
-      "default": null,
-      "doc": "Metadata from the upstream system (required)"
-    },
-    {
-      "name": "upstream_data",
-      "type": [
-        "null",
-        "bytes"
-      ],
-      "default": null,
-      "doc": "Data which caused the error (optional)"
-    },
-    {
-      "name": "upstream_url",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "URL which caused the error (optional)"
-    },
-    {
-      "name": "upstream_response",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "Response from the upstream system (optional)"
-    },
-    {
-      "name": "kafka_cluster",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "Intended kafka cluster (optional)"
-    },
-    {
-      "name": "success_topic",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "Intended topic for success (optional)"
-    },
-    {
-      "name": "error_topic",
-      "type": [
-        "null",
-        "string"
-      ],
-      "default": null,
-      "doc": "Intended topic for error (optional)"
     }
   ]
 }

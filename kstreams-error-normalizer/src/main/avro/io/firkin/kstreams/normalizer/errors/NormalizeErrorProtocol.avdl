@@ -20,15 +20,15 @@
  *   One of the best parts of this file is that it supports comments (like this one), which is
  *   not (easily) possible in .avsc files, which are just JSON.
  */
-// The namespace maps to the package in Java, and namespace in C#.
+// The namespace maps to a package in Java, and a namespace in C#.
 @namespace("io.firkin.kstreams.normalizer.errors.v1.avdl")
-protocol `NormalizedErrorProtocol` {
+protocol NormalizedErrorProtocol {
     // version "1.0.0"
 
     /**
-     * Records and Errors are more-or-less identical, they generate very similar code. In
-     * Java, error types will extend a Throwable, and include a value + cause in the object.
-     * The cause is not
+     Records and Errors are more-or-less identical, they generate very similar code. In
+     Java, error types will extend a Throwable, and include a value + cause in the object.
+     The cause is not
      */
     record HelloRecord {
         /** Message to send. */
@@ -36,85 +36,94 @@ protocol `NormalizedErrorProtocol` {
     }
 
     /**
-     * Example Model for errors like those which might arise from a Source Connector.
-     * Errors of this type will need to be mapped to a common schema.
-     *
-     * Other errors alias themselves to BaseError to indicate they care
+     Example Model for errors like those which might arise from a Source Connector.
+     Errors of this type will need to be mapped to a common schema.
      */
     record BaseError {
-        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
         @logicalType("timestamp-millis") long timestamp;
-        /** Unique id for event tracing. A required field. */
+        /** Unique id for event tracing (required) */
         @logicalType("uuid") string correlation_id;
 
-        /** (optional) Environment where the error took place. */
+        /** Environment where the error took place (optional) */
         union{ null, string } environment_id = null;
-        /** (optional) Application where the error took place. */
+        /** Application where the error took place (optional) */
         union{ null, string } application_id = null;
-        /** (optional) Instance of the Application where the error took place. */
+        /** Instance where the error took place (optional) */
         union{ null, string } instance_id = null;
 
-        /** (optional) Metadata from the source system */
+        /** Metadata from the source system (optional) */
         union{ null, map<string> } metadata = null;
 
-        /** (optional) Data which caused the error */
-        union{ null, bytes } original = null;
-
-        /** 'error' means this will also generate a "cause" field in Java. */
+        /** Data from the source system (optional) */
+        union{ null, bytes } data = null;
     }
 
     /**
-     * Example Error Model which comes from one source system.
+     Example Model for errors like those which might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.
      */
     @aliases(["BaseError"])
     record ExampleOneError {
-        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
         @logicalType("timestamp-millis") long timestamp;
-        /** Unique id for event tracing. A required field. */
+        /** Unique id for event tracing (required) */
         @logicalType("uuid") string correlation_id;
 
-        /** (optional) Environment where the error took place. */
+        /** Environment where the error took place (optional) */
         union{ null, string } environment_id = null;
-        /** (optional) Application where the error took place. */
+        /** Application where the error took place (optional) */
         union{ null, string } application_id = null;
-        /** (optional) Instance of the Application where the error took place. */
+        /** Instance where the error took place (optional) */
         union{ null, string } instance_id = null;
 
-        /** (required) Fields */
+        /* Included for forwards/backwards compatibility with BaseError */
 
-        /** (required) Metadata from the upstream (source) system. Can be empty */
+        /** Metadata from the source system (optional) */
+        union{ null, map<string> } metadata = null;
+        /** Data from the source system (optional) */
+        union{ null, bytes } data = null;
+
+        /** Metadata from the upstream system (required)  */
         map<string> upstream_metadata = {};
-
-        /** (optional) Data which caused the error */
+        /** Data which caused the error (optional) */
         union{ null, bytes }  upstream_data = null;
-        /** (optional) URL which caused the error */
+        /** URL which caused the error (optional) */
         union{ null, string } upstream_url = null;
-        /** (optional) Response from the upstream system */
+        /** Response from the upstream system (optional) */
         union{ null, string } upstream_response = null;
 
-        /** (optional) Intended topic for success. */
+        /** Intended kafka cluster (optional) */
+        union{ null, string } kafka_cluster = null;
+
+        /** Intended topic for success (optional) */
         union{ null, string } success_topic = null;
-        /** (optional) Intended topic for error. */
+        /** Intended topic for error (optional) */
         union{ null, string } error_topic = null;
     }
 
     /**
-     * Example Error Model which comes from a sink system. This error comes from
-     * a Sink which reads from a Topic, using the record to perform an action.
+     Example Error Model which comes from a sink system. This error comes from a
+     Sink which reads from a Topic, using the record to perform an action.
      */
     @aliases(["BaseError"])
     record ExampleTwoError {
-        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
         @logicalType("timestamp-millis") long timestamp;
-        /** Unique id for event tracing. A required field. */
+        /** Unique id for event tracing (required) */
         @logicalType("uuid") string correlation_id;
 
-        /** (optional) Environment where the error took place. */
+        /** Environment where the error took place (optional) */
         union{ null, string } environment_id = null;
-        /** (optional) Application where the error took place. */
+        /** Application where the error took place (optional) */
         union{ null, string } application_id = null;
-        /** (optional) Instance of the Application where the error took place. */
+        /** Instance where the error took place (optional) */
         union{ null, string } instance_id = null;
+
+        /* Included for forwards/backwards compatibility with BaseError */
+        /** Metadata from the source system (optional) */
+        union{ null, map<string> } metadata = null;
+        /** Data from the source system (optional) */
+        union{ null, bytes } data = null;
 
         /** (optional) Metadata from the source system. Can be missing */
         union{ null, map<string>} downstream_metadata = null;
@@ -129,8 +138,8 @@ protocol `NormalizedErrorProtocol` {
     }
 
     /**
-     * An object capturing information about the source of the error.
-     */
+     An object capturing information about the source of the error.
+
     record SystemInfo {
         @logicalType("uuid") string `id`;
         string name = "unnamed";
@@ -140,36 +149,51 @@ protocol `NormalizedErrorProtocol` {
         union{ null, string } applicationId = null;
         union{ null, string } instanceId = null;
         union{ null, array<string> } tags = null;
-    }
+    } */
 
     /**
-     * Example Normalized Error Model to which all other errors are (re)formatted.
+     Example Normalized Error Model to which all other errors are (re)formatted.
      */
     @aliases(["BaseError"])
     record NormalizedError {
-        /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+        /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
         @logicalType("timestamp-millis") long timestamp;
-        /** Unique id for event tracing. A required field. */
+        /** The datetime of when the error occured, in GMT (required) */
+        @logicalType("datetime") string event_datetime;
+        /** Unique id for event tracing (required) */
         @logicalType("uuid") string correlation_id;
 
-        /** (optional) Environment where the error took place. */
+        /** Environment where the error took place (optional) */
         union{ null, string } environment_id = null;
-        /** (optional) Application where the error took place. */
+        /** Application where the error took place (optional) */
         union{ null, string } application_id = null;
-        /** (optional) Instance of the Application where the error took place. */
+        /** Instance where the error took place (optional) */
         union{ null, string } instance_id = null;
 
-        /**
+        /** Metadata from the source system (optional) */
+        union{ null, map<string> } metadata = null;
+
+        /** Data from the source system (optional) */
+        union{ null, bytes } data = null;
+
+        /*
          *  (required) Some originating errors require metadata, but not all.
          *  We normalize to "required" so there is always something available for
          *  downstream systems ... even if it is empty.
          */
+
+        /** Metadata from the Kafka Record (required) */
         map<string> kafka_metadata = {};    // Java: Map<String, String>
+        /** The Record responsible for the error (required) */
         map<bytes>  kafka_record = {};      // Java: Map<String, byte[]>
-        map<bytes>  kafka_schema = {};      // Java: Map<String, String>
+        /** Schema of the Record (required) */
+        map<string> kafka_schema = {};      // Java: Map<String, String>
+        /** Additional data from Kafka (required) */
         map<bytes>  kafka_data = {};        // Java: Map<String, byte[]> Additional data
 
+        /** Additional metadata from related systems (required) */
         map<string> related_metadata = {};  // Java -> Map<String, String>
+        /** Additional data from related systems (required) */
         map<bytes>  related_data = {};      // Java -> Map<String, byte[]>
     }
 

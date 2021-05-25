@@ -12,14 +12,12 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-/** * Example Model for errors like those which might arise from a Source Connector.
-     * Errors of this type will need to be mapped to a common schema.
-     *
-     * Other errors alias themselves to BaseError to indicate they care */
+/** Example Model for errors like those which might arise from a Source Connector.
+     Errors of this type will need to be mapped to a common schema. */
 @org.apache.avro.specific.AvroGenerated
 public class BaseError extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 3551823491194977931L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BaseError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"* Example Model for errors like those which might arise from a Source Connector.\\n     * Errors of this type will need to be mapped to a common schema.\\n     *\\n     * Other errors alias themselves to BaseError to indicate they care\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC.\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing. A required field.\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"(optional) Environment where the error took place.\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"(optional) Application where the error took place.\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"(optional) Instance of the Application where the error took place.\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"(optional) Metadata from the source system\",\"default\":null},{\"name\":\"original\",\"type\":[\"null\",\"bytes\"],\"doc\":\"(optional) Data which caused the error\",\"default\":null}]}");
+  private static final long serialVersionUID = 1468797623987658628L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BaseError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"Example Model for errors like those which might arise from a Source Connector.\\n     Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC (required)\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing (required)\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place (optional)\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place (optional)\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place (optional)\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"Metadata from the source system (optional)\",\"default\":null},{\"name\":\"data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data from the source system (optional)\",\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -78,20 +76,20 @@ static {
     return DECODER.decode(b);
   }
 
-  /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+  /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
    private java.time.Instant timestamp;
-  /** Unique id for event tracing. A required field. */
+  /** Unique id for event tracing (required) */
    private java.lang.CharSequence correlation_id;
-  /** (optional) Environment where the error took place. */
+  /** Environment where the error took place (optional) */
    private java.lang.CharSequence environment_id;
-  /** (optional) Application where the error took place. */
+  /** Application where the error took place (optional) */
    private java.lang.CharSequence application_id;
-  /** (optional) Instance of the Application where the error took place. */
+  /** Instance where the error took place (optional) */
    private java.lang.CharSequence instance_id;
-  /** (optional) Metadata from the source system */
+  /** Metadata from the source system (optional) */
    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
-  /** (optional) Data which caused the error */
-   private java.nio.ByteBuffer original;
+  /** Data from the source system (optional) */
+   private java.nio.ByteBuffer data;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -102,22 +100,22 @@ static {
 
   /**
    * All-args constructor.
-   * @param timestamp The timestamp of when the error occurred, in Unix epoch time UTC.
-   * @param correlation_id Unique id for event tracing. A required field.
-   * @param environment_id (optional) Environment where the error took place.
-   * @param application_id (optional) Application where the error took place.
-   * @param instance_id (optional) Instance of the Application where the error took place.
-   * @param metadata (optional) Metadata from the source system
-   * @param original (optional) Data which caused the error
+   * @param timestamp The timestamp of when the error occurred, in Unix epoch time UTC (required)
+   * @param correlation_id Unique id for event tracing (required)
+   * @param environment_id Environment where the error took place (optional)
+   * @param application_id Application where the error took place (optional)
+   * @param instance_id Instance where the error took place (optional)
+   * @param metadata Metadata from the source system (optional)
+   * @param data Data from the source system (optional)
    */
-  public BaseError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer original) {
+  public BaseError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer data) {
     this.timestamp = timestamp.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
     this.correlation_id = correlation_id;
     this.environment_id = environment_id;
     this.application_id = application_id;
     this.instance_id = instance_id;
     this.metadata = metadata;
-    this.original = original;
+    this.data = data;
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
@@ -131,7 +129,7 @@ static {
     case 3: return application_id;
     case 4: return instance_id;
     case 5: return metadata;
-    case 6: return original;
+    case 6: return data;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -163,14 +161,14 @@ static {
     case 3: application_id = (java.lang.CharSequence)value$; break;
     case 4: instance_id = (java.lang.CharSequence)value$; break;
     case 5: metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
-    case 6: original = (java.nio.ByteBuffer)value$; break;
+    case 6: data = (java.nio.ByteBuffer)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
    * Gets the value of the 'timestamp' field.
-   * @return The timestamp of when the error occurred, in Unix epoch time UTC.
+   * @return The timestamp of when the error occurred, in Unix epoch time UTC (required)
    */
   public java.time.Instant getTimestamp() {
     return timestamp;
@@ -179,7 +177,7 @@ static {
 
   /**
    * Sets the value of the 'timestamp' field.
-   * The timestamp of when the error occurred, in Unix epoch time UTC.
+   * The timestamp of when the error occurred, in Unix epoch time UTC (required)
    * @param value the value to set.
    */
   public void setTimestamp(java.time.Instant value) {
@@ -188,7 +186,7 @@ static {
 
   /**
    * Gets the value of the 'correlation_id' field.
-   * @return Unique id for event tracing. A required field.
+   * @return Unique id for event tracing (required)
    */
   public java.lang.CharSequence getCorrelationId() {
     return correlation_id;
@@ -197,7 +195,7 @@ static {
 
   /**
    * Sets the value of the 'correlation_id' field.
-   * Unique id for event tracing. A required field.
+   * Unique id for event tracing (required)
    * @param value the value to set.
    */
   public void setCorrelationId(java.lang.CharSequence value) {
@@ -206,7 +204,7 @@ static {
 
   /**
    * Gets the value of the 'environment_id' field.
-   * @return (optional) Environment where the error took place.
+   * @return Environment where the error took place (optional)
    */
   public java.lang.CharSequence getEnvironmentId() {
     return environment_id;
@@ -215,7 +213,7 @@ static {
 
   /**
    * Sets the value of the 'environment_id' field.
-   * (optional) Environment where the error took place.
+   * Environment where the error took place (optional)
    * @param value the value to set.
    */
   public void setEnvironmentId(java.lang.CharSequence value) {
@@ -224,7 +222,7 @@ static {
 
   /**
    * Gets the value of the 'application_id' field.
-   * @return (optional) Application where the error took place.
+   * @return Application where the error took place (optional)
    */
   public java.lang.CharSequence getApplicationId() {
     return application_id;
@@ -233,7 +231,7 @@ static {
 
   /**
    * Sets the value of the 'application_id' field.
-   * (optional) Application where the error took place.
+   * Application where the error took place (optional)
    * @param value the value to set.
    */
   public void setApplicationId(java.lang.CharSequence value) {
@@ -242,7 +240,7 @@ static {
 
   /**
    * Gets the value of the 'instance_id' field.
-   * @return (optional) Instance of the Application where the error took place.
+   * @return Instance where the error took place (optional)
    */
   public java.lang.CharSequence getInstanceId() {
     return instance_id;
@@ -251,7 +249,7 @@ static {
 
   /**
    * Sets the value of the 'instance_id' field.
-   * (optional) Instance of the Application where the error took place.
+   * Instance where the error took place (optional)
    * @param value the value to set.
    */
   public void setInstanceId(java.lang.CharSequence value) {
@@ -260,7 +258,7 @@ static {
 
   /**
    * Gets the value of the 'metadata' field.
-   * @return (optional) Metadata from the source system
+   * @return Metadata from the source system (optional)
    */
   public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
     return metadata;
@@ -269,7 +267,7 @@ static {
 
   /**
    * Sets the value of the 'metadata' field.
-   * (optional) Metadata from the source system
+   * Metadata from the source system (optional)
    * @param value the value to set.
    */
   public void setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
@@ -277,21 +275,21 @@ static {
   }
 
   /**
-   * Gets the value of the 'original' field.
-   * @return (optional) Data which caused the error
+   * Gets the value of the 'data' field.
+   * @return Data from the source system (optional)
    */
-  public java.nio.ByteBuffer getOriginal() {
-    return original;
+  public java.nio.ByteBuffer getData() {
+    return data;
   }
 
 
   /**
-   * Sets the value of the 'original' field.
-   * (optional) Data which caused the error
+   * Sets the value of the 'data' field.
+   * Data from the source system (optional)
    * @param value the value to set.
    */
-  public void setOriginal(java.nio.ByteBuffer value) {
-    this.original = value;
+  public void setData(java.nio.ByteBuffer value) {
+    this.data = value;
   }
 
   /**
@@ -335,20 +333,20 @@ static {
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<BaseError>
     implements org.apache.avro.data.RecordBuilder<BaseError> {
 
-    /** The timestamp of when the error occurred, in Unix epoch time UTC. */
+    /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
     private java.time.Instant timestamp;
-    /** Unique id for event tracing. A required field. */
+    /** Unique id for event tracing (required) */
     private java.lang.CharSequence correlation_id;
-    /** (optional) Environment where the error took place. */
+    /** Environment where the error took place (optional) */
     private java.lang.CharSequence environment_id;
-    /** (optional) Application where the error took place. */
+    /** Application where the error took place (optional) */
     private java.lang.CharSequence application_id;
-    /** (optional) Instance of the Application where the error took place. */
+    /** Instance where the error took place (optional) */
     private java.lang.CharSequence instance_id;
-    /** (optional) Metadata from the source system */
+    /** Metadata from the source system (optional) */
     private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
-    /** (optional) Data which caused the error */
-    private java.nio.ByteBuffer original;
+    /** Data from the source system (optional) */
+    private java.nio.ByteBuffer data;
 
     /** Creates a new Builder */
     private Builder() {
@@ -385,8 +383,8 @@ static {
         this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.original)) {
-        this.original = data().deepCopy(fields()[6].schema(), other.original);
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
     }
@@ -421,15 +419,15 @@ static {
         this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.original)) {
-        this.original = data().deepCopy(fields()[6].schema(), other.original);
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = true;
       }
     }
 
     /**
       * Gets the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return The value.
       */
     public java.time.Instant getTimestamp() {
@@ -439,7 +437,7 @@ static {
 
     /**
       * Sets the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @param value The value of 'timestamp'.
       * @return This builder.
       */
@@ -452,7 +450,7 @@ static {
 
     /**
       * Checks whether the 'timestamp' field has been set.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return True if the 'timestamp' field has been set, false otherwise.
       */
     public boolean hasTimestamp() {
@@ -462,7 +460,7 @@ static {
 
     /**
       * Clears the value of the 'timestamp' field.
-      * The timestamp of when the error occurred, in Unix epoch time UTC.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearTimestamp() {
@@ -472,7 +470,7 @@ static {
 
     /**
       * Gets the value of the 'correlation_id' field.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @return The value.
       */
     public java.lang.CharSequence getCorrelationId() {
@@ -482,7 +480,7 @@ static {
 
     /**
       * Sets the value of the 'correlation_id' field.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @param value The value of 'correlation_id'.
       * @return This builder.
       */
@@ -495,7 +493,7 @@ static {
 
     /**
       * Checks whether the 'correlation_id' field has been set.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @return True if the 'correlation_id' field has been set, false otherwise.
       */
     public boolean hasCorrelationId() {
@@ -505,7 +503,7 @@ static {
 
     /**
       * Clears the value of the 'correlation_id' field.
-      * Unique id for event tracing. A required field.
+      * Unique id for event tracing (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearCorrelationId() {
@@ -516,7 +514,7 @@ static {
 
     /**
       * Gets the value of the 'environment_id' field.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getEnvironmentId() {
@@ -526,7 +524,7 @@ static {
 
     /**
       * Sets the value of the 'environment_id' field.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @param value The value of 'environment_id'.
       * @return This builder.
       */
@@ -539,7 +537,7 @@ static {
 
     /**
       * Checks whether the 'environment_id' field has been set.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @return True if the 'environment_id' field has been set, false otherwise.
       */
     public boolean hasEnvironmentId() {
@@ -549,7 +547,7 @@ static {
 
     /**
       * Clears the value of the 'environment_id' field.
-      * (optional) Environment where the error took place.
+      * Environment where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearEnvironmentId() {
@@ -560,7 +558,7 @@ static {
 
     /**
       * Gets the value of the 'application_id' field.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getApplicationId() {
@@ -570,7 +568,7 @@ static {
 
     /**
       * Sets the value of the 'application_id' field.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @param value The value of 'application_id'.
       * @return This builder.
       */
@@ -583,7 +581,7 @@ static {
 
     /**
       * Checks whether the 'application_id' field has been set.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @return True if the 'application_id' field has been set, false otherwise.
       */
     public boolean hasApplicationId() {
@@ -593,7 +591,7 @@ static {
 
     /**
       * Clears the value of the 'application_id' field.
-      * (optional) Application where the error took place.
+      * Application where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearApplicationId() {
@@ -604,7 +602,7 @@ static {
 
     /**
       * Gets the value of the 'instance_id' field.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getInstanceId() {
@@ -614,7 +612,7 @@ static {
 
     /**
       * Sets the value of the 'instance_id' field.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @param value The value of 'instance_id'.
       * @return This builder.
       */
@@ -627,7 +625,7 @@ static {
 
     /**
       * Checks whether the 'instance_id' field has been set.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @return True if the 'instance_id' field has been set, false otherwise.
       */
     public boolean hasInstanceId() {
@@ -637,7 +635,7 @@ static {
 
     /**
       * Clears the value of the 'instance_id' field.
-      * (optional) Instance of the Application where the error took place.
+      * Instance where the error took place (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearInstanceId() {
@@ -648,7 +646,7 @@ static {
 
     /**
       * Gets the value of the 'metadata' field.
-      * (optional) Metadata from the source system
+      * Metadata from the source system (optional)
       * @return The value.
       */
     public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
@@ -658,7 +656,7 @@ static {
 
     /**
       * Sets the value of the 'metadata' field.
-      * (optional) Metadata from the source system
+      * Metadata from the source system (optional)
       * @param value The value of 'metadata'.
       * @return This builder.
       */
@@ -671,7 +669,7 @@ static {
 
     /**
       * Checks whether the 'metadata' field has been set.
-      * (optional) Metadata from the source system
+      * Metadata from the source system (optional)
       * @return True if the 'metadata' field has been set, false otherwise.
       */
     public boolean hasMetadata() {
@@ -681,7 +679,7 @@ static {
 
     /**
       * Clears the value of the 'metadata' field.
-      * (optional) Metadata from the source system
+      * Metadata from the source system (optional)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearMetadata() {
@@ -691,45 +689,45 @@ static {
     }
 
     /**
-      * Gets the value of the 'original' field.
-      * (optional) Data which caused the error
+      * Gets the value of the 'data' field.
+      * Data from the source system (optional)
       * @return The value.
       */
-    public java.nio.ByteBuffer getOriginal() {
-      return original;
+    public java.nio.ByteBuffer getData() {
+      return data;
     }
 
 
     /**
-      * Sets the value of the 'original' field.
-      * (optional) Data which caused the error
-      * @param value The value of 'original'.
+      * Sets the value of the 'data' field.
+      * Data from the source system (optional)
+      * @param value The value of 'data'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder setOriginal(java.nio.ByteBuffer value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder setData(java.nio.ByteBuffer value) {
       validate(fields()[6], value);
-      this.original = value;
+      this.data = value;
       fieldSetFlags()[6] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'original' field has been set.
-      * (optional) Data which caused the error
-      * @return True if the 'original' field has been set, false otherwise.
+      * Checks whether the 'data' field has been set.
+      * Data from the source system (optional)
+      * @return True if the 'data' field has been set, false otherwise.
       */
-    public boolean hasOriginal() {
+    public boolean hasData() {
       return fieldSetFlags()[6];
     }
 
 
     /**
-      * Clears the value of the 'original' field.
-      * (optional) Data which caused the error
+      * Clears the value of the 'data' field.
+      * Data from the source system (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearOriginal() {
-      original = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearData() {
+      data = null;
       fieldSetFlags()[6] = false;
       return this;
     }
@@ -745,7 +743,7 @@ static {
         record.application_id = fieldSetFlags()[3] ? this.application_id : (java.lang.CharSequence) defaultValue(fields()[3]);
         record.instance_id = fieldSetFlags()[4] ? this.instance_id : (java.lang.CharSequence) defaultValue(fields()[4]);
         record.metadata = fieldSetFlags()[5] ? this.metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[5]);
-        record.original = fieldSetFlags()[6] ? this.original : (java.nio.ByteBuffer) defaultValue(fields()[6]);
+        record.data = fieldSetFlags()[6] ? this.data : (java.nio.ByteBuffer) defaultValue(fields()[6]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;

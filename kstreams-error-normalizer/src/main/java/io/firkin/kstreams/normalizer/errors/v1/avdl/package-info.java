@@ -23,5 +23,8 @@
  *
  * The record types include a {@link io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError BaseError}
  * which specifies the minimal common core of error records across a variety of systems.
+ *
+ * Because this was defined as a Protocol, it generates the {@code interface NormalizedErrorProtocol}.
+ * This can be ignored for the purposes of this example.
  */
 package io.firkin.kstreams.normalizer.errors.v1.avdl;

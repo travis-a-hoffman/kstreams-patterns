@@ -12,16 +12,16 @@ import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
-/** Example Model for errors like those that might arise from a Source Connector. Errors of this type will need to be mapped to a common schema. */
+/** Example Model for errors like those which might arise from a Source Connector. Errors of this type will need to be mapped to a common schema. */
 @org.apache.avro.specific.AvroGenerated
 public class ExampleOneError extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -6367969886876563741L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ExampleOneError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avsc\",\"doc\":\"Example Model for errors like those that might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"correlation_id\",\"type\":\"string\",\"doc\":\"Unique id for event tracing\"},{\"name\":\"environment_id\",\"type\":\"string\",\"doc\":\"Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.\"},{\"name\":\"service_id\",\"type\":\"string\",\"doc\":\"The identifier of the service. This ...\"},{\"name\":\"exception\",\"type\":\"string\",\"doc\":\"Error information from the connector\"},{\"name\":\"metadata\",\"type\":{\"type\":\"map\",\"values\":\"string\"},\"doc\":\"Keys value pairs for any domain specific metadata\"},{\"name\":\"source_message\",\"type\":\"string\",\"doc\":\"Message that caused the error\"},{\"name\":\"source_message_schema_name\",\"type\":\"string\",\"doc\":\"Schema name of the source message\"},{\"name\":\"source_message_offset\",\"type\":\"int\",\"doc\":\"Offset of the source message\"},{\"name\":\"source_url\",\"type\":\"string\",\"doc\":\"URL for the source object\"},{\"name\":\"source_value\",\"type\":\"bytes\",\"doc\":\"The original object from the source service, which caused the error.\"},{\"name\":\"source_schema\",\"type\":\"string\",\"doc\":\"Location to the definition of the source object's schema (if any).\"},{\"name\":\"source_schema_id\",\"type\":\"string\",\"doc\":\"Identifier of the source object's schema.\"},{\"name\":\"topic\",\"type\":\"string\",\"doc\":\"Name of the intended destination topic. In this error, we have a destination topic.\"},{\"name\":\"timestamp\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}}]}");
+  private static final long serialVersionUID = 7824149626307959951L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ExampleOneError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avsc\",\"doc\":\"Example Model for errors like those which might arise from a Source Connector. Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC (required)\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing (required)\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place (optional)\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place (optional)\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place (optional)\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\",\"default\":null}],\"doc\":\"Metadata from the source system (optional)\",\"default\":null},{\"name\":\"data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data from the source system (optional)\",\"default\":null},{\"name\":\"upstream_metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"Metadata from the upstream system (required)\",\"default\":null},{\"name\":\"upstream_data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data which caused the error (optional)\",\"default\":null},{\"name\":\"upstream_url\",\"type\":[\"null\",\"string\"],\"doc\":\"URL which caused the error (optional)\",\"default\":null},{\"name\":\"upstream_response\",\"type\":[\"null\",\"string\"],\"doc\":\"Response from the upstream system (optional)\",\"default\":null},{\"name\":\"kafka_cluster\",\"type\":[\"null\",\"string\"],\"doc\":\"Intended kafka cluster (optional)\",\"default\":null},{\"name\":\"success_topic\",\"type\":[\"null\",\"string\"],\"doc\":\"Intended topic for success (optional)\",\"default\":null},{\"name\":\"error_topic\",\"type\":[\"null\",\"string\"],\"doc\":\"Intended topic for error (optional)\",\"default\":null}],\"aliases\":[\"BaseError\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
 static {
-    MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.DateConversion());
+    MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
   }
 
   private static final BinaryMessageEncoder<ExampleOneError> ENCODER =
@@ -75,33 +75,34 @@ static {
     return DECODER.decode(b);
   }
 
-  /** Unique id for event tracing */
+  /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
+   private java.time.Instant timestamp;
+  /** Unique id for event tracing (required) */
    private java.lang.CharSequence correlation_id;
-  /** Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to. */
+  /** Environment where the error took place (optional) */
    private java.lang.CharSequence environment_id;
-  /** The identifier of the service. This ... */
-   private java.lang.CharSequence service_id;
-  /** Error information from the connector */
-   private java.lang.CharSequence exception;
-  /** Keys value pairs for any domain specific metadata */
+  /** Application where the error took place (optional) */
+   private java.lang.CharSequence application_id;
+  /** Instance where the error took place (optional) */
+   private java.lang.CharSequence instance_id;
+  /** Metadata from the source system (optional) */
    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
-  /** Message that caused the error */
-   private java.lang.CharSequence source_message;
-  /** Schema name of the source message */
-   private java.lang.CharSequence source_message_schema_name;
-  /** Offset of the source message */
-   private int source_message_offset;
-  /** URL for the source object */
-   private java.lang.CharSequence source_url;
-  /** The original object from the source service, which caused the error. */
-   private java.nio.ByteBuffer source_value;
-  /** Location to the definition of the source object's schema (if any). */
-   private java.lang.CharSequence source_schema;
-  /** Identifier of the source object's schema. */
-   private java.lang.CharSequence source_schema_id;
-  /** Name of the intended destination topic. In this error, we have a destination topic. */
-   private java.lang.CharSequence topic;
-   private java.time.LocalDate timestamp;
+  /** Data from the source system (optional) */
+   private java.nio.ByteBuffer data;
+  /** Metadata from the upstream system (required) */
+   private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> upstream_metadata;
+  /** Data which caused the error (optional) */
+   private java.nio.ByteBuffer upstream_data;
+  /** URL which caused the error (optional) */
+   private java.lang.CharSequence upstream_url;
+  /** Response from the upstream system (optional) */
+   private java.lang.CharSequence upstream_response;
+  /** Intended kafka cluster (optional) */
+   private java.lang.CharSequence kafka_cluster;
+  /** Intended topic for success (optional) */
+   private java.lang.CharSequence success_topic;
+  /** Intended topic for error (optional) */
+   private java.lang.CharSequence error_topic;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -112,36 +113,36 @@ static {
 
   /**
    * All-args constructor.
-   * @param correlation_id Unique id for event tracing
-   * @param environment_id Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
-   * @param service_id The identifier of the service. This ...
-   * @param exception Error information from the connector
-   * @param metadata Keys value pairs for any domain specific metadata
-   * @param source_message Message that caused the error
-   * @param source_message_schema_name Schema name of the source message
-   * @param source_message_offset Offset of the source message
-   * @param source_url URL for the source object
-   * @param source_value The original object from the source service, which caused the error.
-   * @param source_schema Location to the definition of the source object's schema (if any).
-   * @param source_schema_id Identifier of the source object's schema.
-   * @param topic Name of the intended destination topic. In this error, we have a destination topic.
-   * @param timestamp The new value for timestamp
+   * @param timestamp The timestamp of when the error occurred, in Unix epoch time UTC (required)
+   * @param correlation_id Unique id for event tracing (required)
+   * @param environment_id Environment where the error took place (optional)
+   * @param application_id Application where the error took place (optional)
+   * @param instance_id Instance where the error took place (optional)
+   * @param metadata Metadata from the source system (optional)
+   * @param data Data from the source system (optional)
+   * @param upstream_metadata Metadata from the upstream system (required)
+   * @param upstream_data Data which caused the error (optional)
+   * @param upstream_url URL which caused the error (optional)
+   * @param upstream_response Response from the upstream system (optional)
+   * @param kafka_cluster Intended kafka cluster (optional)
+   * @param success_topic Intended topic for success (optional)
+   * @param error_topic Intended topic for error (optional)
    */
-  public ExampleOneError(java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence service_id, java.lang.CharSequence exception, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.lang.CharSequence source_message, java.lang.CharSequence source_message_schema_name, java.lang.Integer source_message_offset, java.lang.CharSequence source_url, java.nio.ByteBuffer source_value, java.lang.CharSequence source_schema, java.lang.CharSequence source_schema_id, java.lang.CharSequence topic, java.time.LocalDate timestamp) {
+  public ExampleOneError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer data, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> upstream_metadata, java.nio.ByteBuffer upstream_data, java.lang.CharSequence upstream_url, java.lang.CharSequence upstream_response, java.lang.CharSequence kafka_cluster, java.lang.CharSequence success_topic, java.lang.CharSequence error_topic) {
+    this.timestamp = timestamp.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
     this.correlation_id = correlation_id;
     this.environment_id = environment_id;
-    this.service_id = service_id;
-    this.exception = exception;
+    this.application_id = application_id;
+    this.instance_id = instance_id;
     this.metadata = metadata;
-    this.source_message = source_message;
-    this.source_message_schema_name = source_message_schema_name;
-    this.source_message_offset = source_message_offset;
-    this.source_url = source_url;
-    this.source_value = source_value;
-    this.source_schema = source_schema;
-    this.source_schema_id = source_schema_id;
-    this.topic = topic;
-    this.timestamp = timestamp;
+    this.data = data;
+    this.upstream_metadata = upstream_metadata;
+    this.upstream_data = upstream_data;
+    this.upstream_url = upstream_url;
+    this.upstream_response = upstream_response;
+    this.kafka_cluster = kafka_cluster;
+    this.success_topic = success_topic;
+    this.error_topic = error_topic;
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
@@ -149,26 +150,27 @@ static {
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return correlation_id;
-    case 1: return environment_id;
-    case 2: return service_id;
-    case 3: return exception;
-    case 4: return metadata;
-    case 5: return source_message;
-    case 6: return source_message_schema_name;
-    case 7: return source_message_offset;
-    case 8: return source_url;
-    case 9: return source_value;
-    case 10: return source_schema;
-    case 11: return source_schema_id;
-    case 12: return topic;
-    case 13: return timestamp;
+    case 0: return timestamp;
+    case 1: return correlation_id;
+    case 2: return environment_id;
+    case 3: return application_id;
+    case 4: return instance_id;
+    case 5: return metadata;
+    case 6: return data;
+    case 7: return upstream_metadata;
+    case 8: return upstream_data;
+    case 9: return upstream_url;
+    case 10: return upstream_response;
+    case 11: return kafka_cluster;
+    case 12: return success_topic;
+    case 13: return error_topic;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
+      new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
       null,
       null,
       null,
@@ -182,7 +184,6 @@ static {
       null,
       null,
       null,
-      new org.apache.avro.data.TimeConversions.DateConversion(),
       null
   };
 
@@ -195,27 +196,45 @@ static {
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: correlation_id = (java.lang.CharSequence)value$; break;
-    case 1: environment_id = (java.lang.CharSequence)value$; break;
-    case 2: service_id = (java.lang.CharSequence)value$; break;
-    case 3: exception = (java.lang.CharSequence)value$; break;
-    case 4: metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
-    case 5: source_message = (java.lang.CharSequence)value$; break;
-    case 6: source_message_schema_name = (java.lang.CharSequence)value$; break;
-    case 7: source_message_offset = (java.lang.Integer)value$; break;
-    case 8: source_url = (java.lang.CharSequence)value$; break;
-    case 9: source_value = (java.nio.ByteBuffer)value$; break;
-    case 10: source_schema = (java.lang.CharSequence)value$; break;
-    case 11: source_schema_id = (java.lang.CharSequence)value$; break;
-    case 12: topic = (java.lang.CharSequence)value$; break;
-    case 13: timestamp = (java.time.LocalDate)value$; break;
+    case 0: timestamp = (java.time.Instant)value$; break;
+    case 1: correlation_id = (java.lang.CharSequence)value$; break;
+    case 2: environment_id = (java.lang.CharSequence)value$; break;
+    case 3: application_id = (java.lang.CharSequence)value$; break;
+    case 4: instance_id = (java.lang.CharSequence)value$; break;
+    case 5: metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
+    case 6: data = (java.nio.ByteBuffer)value$; break;
+    case 7: upstream_metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
+    case 8: upstream_data = (java.nio.ByteBuffer)value$; break;
+    case 9: upstream_url = (java.lang.CharSequence)value$; break;
+    case 10: upstream_response = (java.lang.CharSequence)value$; break;
+    case 11: kafka_cluster = (java.lang.CharSequence)value$; break;
+    case 12: success_topic = (java.lang.CharSequence)value$; break;
+    case 13: error_topic = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
+   * Gets the value of the 'timestamp' field.
+   * @return The timestamp of when the error occurred, in Unix epoch time UTC (required)
+   */
+  public java.time.Instant getTimestamp() {
+    return timestamp;
+  }
+
+
+  /**
+   * Sets the value of the 'timestamp' field.
+   * The timestamp of when the error occurred, in Unix epoch time UTC (required)
+   * @param value the value to set.
+   */
+  public void setTimestamp(java.time.Instant value) {
+    this.timestamp = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
+  }
+
+  /**
    * Gets the value of the 'correlation_id' field.
-   * @return Unique id for event tracing
+   * @return Unique id for event tracing (required)
    */
   public java.lang.CharSequence getCorrelationId() {
     return correlation_id;
@@ -224,7 +243,7 @@ static {
 
   /**
    * Sets the value of the 'correlation_id' field.
-   * Unique id for event tracing
+   * Unique id for event tracing (required)
    * @param value the value to set.
    */
   public void setCorrelationId(java.lang.CharSequence value) {
@@ -233,7 +252,7 @@ static {
 
   /**
    * Gets the value of the 'environment_id' field.
-   * @return Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+   * @return Environment where the error took place (optional)
    */
   public java.lang.CharSequence getEnvironmentId() {
     return environment_id;
@@ -242,7 +261,7 @@ static {
 
   /**
    * Sets the value of the 'environment_id' field.
-   * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+   * Environment where the error took place (optional)
    * @param value the value to set.
    */
   public void setEnvironmentId(java.lang.CharSequence value) {
@@ -250,44 +269,44 @@ static {
   }
 
   /**
-   * Gets the value of the 'service_id' field.
-   * @return The identifier of the service. This ...
+   * Gets the value of the 'application_id' field.
+   * @return Application where the error took place (optional)
    */
-  public java.lang.CharSequence getServiceId() {
-    return service_id;
+  public java.lang.CharSequence getApplicationId() {
+    return application_id;
   }
 
 
   /**
-   * Sets the value of the 'service_id' field.
-   * The identifier of the service. This ...
+   * Sets the value of the 'application_id' field.
+   * Application where the error took place (optional)
    * @param value the value to set.
    */
-  public void setServiceId(java.lang.CharSequence value) {
-    this.service_id = value;
+  public void setApplicationId(java.lang.CharSequence value) {
+    this.application_id = value;
   }
 
   /**
-   * Gets the value of the 'exception' field.
-   * @return Error information from the connector
+   * Gets the value of the 'instance_id' field.
+   * @return Instance where the error took place (optional)
    */
-  public java.lang.CharSequence getException() {
-    return exception;
+  public java.lang.CharSequence getInstanceId() {
+    return instance_id;
   }
 
 
   /**
-   * Sets the value of the 'exception' field.
-   * Error information from the connector
+   * Sets the value of the 'instance_id' field.
+   * Instance where the error took place (optional)
    * @param value the value to set.
    */
-  public void setException(java.lang.CharSequence value) {
-    this.exception = value;
+  public void setInstanceId(java.lang.CharSequence value) {
+    this.instance_id = value;
   }
 
   /**
    * Gets the value of the 'metadata' field.
-   * @return Keys value pairs for any domain specific metadata
+   * @return Metadata from the source system (optional)
    */
   public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
     return metadata;
@@ -296,7 +315,7 @@ static {
 
   /**
    * Sets the value of the 'metadata' field.
-   * Keys value pairs for any domain specific metadata
+   * Metadata from the source system (optional)
    * @param value the value to set.
    */
   public void setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
@@ -304,164 +323,147 @@ static {
   }
 
   /**
-   * Gets the value of the 'source_message' field.
-   * @return Message that caused the error
+   * Gets the value of the 'data' field.
+   * @return Data from the source system (optional)
    */
-  public java.lang.CharSequence getSourceMessage() {
-    return source_message;
+  public java.nio.ByteBuffer getData() {
+    return data;
   }
 
 
   /**
-   * Sets the value of the 'source_message' field.
-   * Message that caused the error
+   * Sets the value of the 'data' field.
+   * Data from the source system (optional)
    * @param value the value to set.
    */
-  public void setSourceMessage(java.lang.CharSequence value) {
-    this.source_message = value;
+  public void setData(java.nio.ByteBuffer value) {
+    this.data = value;
   }
 
   /**
-   * Gets the value of the 'source_message_schema_name' field.
-   * @return Schema name of the source message
+   * Gets the value of the 'upstream_metadata' field.
+   * @return Metadata from the upstream system (required)
    */
-  public java.lang.CharSequence getSourceMessageSchemaName() {
-    return source_message_schema_name;
+  public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getUpstreamMetadata() {
+    return upstream_metadata;
   }
 
 
   /**
-   * Sets the value of the 'source_message_schema_name' field.
-   * Schema name of the source message
+   * Sets the value of the 'upstream_metadata' field.
+   * Metadata from the upstream system (required)
    * @param value the value to set.
    */
-  public void setSourceMessageSchemaName(java.lang.CharSequence value) {
-    this.source_message_schema_name = value;
+  public void setUpstreamMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
+    this.upstream_metadata = value;
   }
 
   /**
-   * Gets the value of the 'source_message_offset' field.
-   * @return Offset of the source message
+   * Gets the value of the 'upstream_data' field.
+   * @return Data which caused the error (optional)
    */
-  public int getSourceMessageOffset() {
-    return source_message_offset;
+  public java.nio.ByteBuffer getUpstreamData() {
+    return upstream_data;
   }
 
 
   /**
-   * Sets the value of the 'source_message_offset' field.
-   * Offset of the source message
+   * Sets the value of the 'upstream_data' field.
+   * Data which caused the error (optional)
    * @param value the value to set.
    */
-  public void setSourceMessageOffset(int value) {
-    this.source_message_offset = value;
+  public void setUpstreamData(java.nio.ByteBuffer value) {
+    this.upstream_data = value;
   }
 
   /**
-   * Gets the value of the 'source_url' field.
-   * @return URL for the source object
+   * Gets the value of the 'upstream_url' field.
+   * @return URL which caused the error (optional)
    */
-  public java.lang.CharSequence getSourceUrl() {
-    return source_url;
+  public java.lang.CharSequence getUpstreamUrl() {
+    return upstream_url;
   }
 
 
   /**
-   * Sets the value of the 'source_url' field.
-   * URL for the source object
+   * Sets the value of the 'upstream_url' field.
+   * URL which caused the error (optional)
    * @param value the value to set.
    */
-  public void setSourceUrl(java.lang.CharSequence value) {
-    this.source_url = value;
+  public void setUpstreamUrl(java.lang.CharSequence value) {
+    this.upstream_url = value;
   }
 
   /**
-   * Gets the value of the 'source_value' field.
-   * @return The original object from the source service, which caused the error.
+   * Gets the value of the 'upstream_response' field.
+   * @return Response from the upstream system (optional)
    */
-  public java.nio.ByteBuffer getSourceValue() {
-    return source_value;
+  public java.lang.CharSequence getUpstreamResponse() {
+    return upstream_response;
   }
 
 
   /**
-   * Sets the value of the 'source_value' field.
-   * The original object from the source service, which caused the error.
+   * Sets the value of the 'upstream_response' field.
+   * Response from the upstream system (optional)
    * @param value the value to set.
    */
-  public void setSourceValue(java.nio.ByteBuffer value) {
-    this.source_value = value;
+  public void setUpstreamResponse(java.lang.CharSequence value) {
+    this.upstream_response = value;
   }
 
   /**
-   * Gets the value of the 'source_schema' field.
-   * @return Location to the definition of the source object's schema (if any).
+   * Gets the value of the 'kafka_cluster' field.
+   * @return Intended kafka cluster (optional)
    */
-  public java.lang.CharSequence getSourceSchema() {
-    return source_schema;
+  public java.lang.CharSequence getKafkaCluster() {
+    return kafka_cluster;
   }
 
 
   /**
-   * Sets the value of the 'source_schema' field.
-   * Location to the definition of the source object's schema (if any).
+   * Sets the value of the 'kafka_cluster' field.
+   * Intended kafka cluster (optional)
    * @param value the value to set.
    */
-  public void setSourceSchema(java.lang.CharSequence value) {
-    this.source_schema = value;
+  public void setKafkaCluster(java.lang.CharSequence value) {
+    this.kafka_cluster = value;
   }
 
   /**
-   * Gets the value of the 'source_schema_id' field.
-   * @return Identifier of the source object's schema.
+   * Gets the value of the 'success_topic' field.
+   * @return Intended topic for success (optional)
    */
-  public java.lang.CharSequence getSourceSchemaId() {
-    return source_schema_id;
+  public java.lang.CharSequence getSuccessTopic() {
+    return success_topic;
   }
 
 
   /**
-   * Sets the value of the 'source_schema_id' field.
-   * Identifier of the source object's schema.
+   * Sets the value of the 'success_topic' field.
+   * Intended topic for success (optional)
    * @param value the value to set.
    */
-  public void setSourceSchemaId(java.lang.CharSequence value) {
-    this.source_schema_id = value;
+  public void setSuccessTopic(java.lang.CharSequence value) {
+    this.success_topic = value;
   }
 
   /**
-   * Gets the value of the 'topic' field.
-   * @return Name of the intended destination topic. In this error, we have a destination topic.
+   * Gets the value of the 'error_topic' field.
+   * @return Intended topic for error (optional)
    */
-  public java.lang.CharSequence getTopic() {
-    return topic;
+  public java.lang.CharSequence getErrorTopic() {
+    return error_topic;
   }
 
 
   /**
-   * Sets the value of the 'topic' field.
-   * Name of the intended destination topic. In this error, we have a destination topic.
+   * Sets the value of the 'error_topic' field.
+   * Intended topic for error (optional)
    * @param value the value to set.
    */
-  public void setTopic(java.lang.CharSequence value) {
-    this.topic = value;
-  }
-
-  /**
-   * Gets the value of the 'timestamp' field.
-   * @return The value of the 'timestamp' field.
-   */
-  public java.time.LocalDate getTimestamp() {
-    return timestamp;
-  }
-
-
-  /**
-   * Sets the value of the 'timestamp' field.
-   * @param value the value to set.
-   */
-  public void setTimestamp(java.time.LocalDate value) {
-    this.timestamp = value;
+  public void setErrorTopic(java.lang.CharSequence value) {
+    this.error_topic = value;
   }
 
   /**
@@ -505,33 +507,34 @@ static {
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ExampleOneError>
     implements org.apache.avro.data.RecordBuilder<ExampleOneError> {
 
-    /** Unique id for event tracing */
+    /** The timestamp of when the error occurred, in Unix epoch time UTC (required) */
+    private java.time.Instant timestamp;
+    /** Unique id for event tracing (required) */
     private java.lang.CharSequence correlation_id;
-    /** Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to. */
+    /** Environment where the error took place (optional) */
     private java.lang.CharSequence environment_id;
-    /** The identifier of the service. This ... */
-    private java.lang.CharSequence service_id;
-    /** Error information from the connector */
-    private java.lang.CharSequence exception;
-    /** Keys value pairs for any domain specific metadata */
+    /** Application where the error took place (optional) */
+    private java.lang.CharSequence application_id;
+    /** Instance where the error took place (optional) */
+    private java.lang.CharSequence instance_id;
+    /** Metadata from the source system (optional) */
     private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
-    /** Message that caused the error */
-    private java.lang.CharSequence source_message;
-    /** Schema name of the source message */
-    private java.lang.CharSequence source_message_schema_name;
-    /** Offset of the source message */
-    private int source_message_offset;
-    /** URL for the source object */
-    private java.lang.CharSequence source_url;
-    /** The original object from the source service, which caused the error. */
-    private java.nio.ByteBuffer source_value;
-    /** Location to the definition of the source object's schema (if any). */
-    private java.lang.CharSequence source_schema;
-    /** Identifier of the source object's schema. */
-    private java.lang.CharSequence source_schema_id;
-    /** Name of the intended destination topic. In this error, we have a destination topic. */
-    private java.lang.CharSequence topic;
-    private java.time.LocalDate timestamp;
+    /** Data from the source system (optional) */
+    private java.nio.ByteBuffer data;
+    /** Metadata from the upstream system (required) */
+    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> upstream_metadata;
+    /** Data which caused the error (optional) */
+    private java.nio.ByteBuffer upstream_data;
+    /** URL which caused the error (optional) */
+    private java.lang.CharSequence upstream_url;
+    /** Response from the upstream system (optional) */
+    private java.lang.CharSequence upstream_response;
+    /** Intended kafka cluster (optional) */
+    private java.lang.CharSequence kafka_cluster;
+    /** Intended topic for success (optional) */
+    private java.lang.CharSequence success_topic;
+    /** Intended topic for error (optional) */
+    private java.lang.CharSequence error_topic;
 
     /** Creates a new Builder */
     private Builder() {
@@ -544,60 +547,60 @@ static {
      */
     private Builder(io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.correlation_id)) {
-        this.correlation_id = data().deepCopy(fields()[0].schema(), other.correlation_id);
+      if (isValidValue(fields()[0], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[0].schema(), other.timestamp);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.environment_id)) {
-        this.environment_id = data().deepCopy(fields()[1].schema(), other.environment_id);
+      if (isValidValue(fields()[1], other.correlation_id)) {
+        this.correlation_id = data().deepCopy(fields()[1].schema(), other.correlation_id);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.service_id)) {
-        this.service_id = data().deepCopy(fields()[2].schema(), other.service_id);
+      if (isValidValue(fields()[2], other.environment_id)) {
+        this.environment_id = data().deepCopy(fields()[2].schema(), other.environment_id);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.exception)) {
-        this.exception = data().deepCopy(fields()[3].schema(), other.exception);
+      if (isValidValue(fields()[3], other.application_id)) {
+        this.application_id = data().deepCopy(fields()[3].schema(), other.application_id);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.metadata)) {
-        this.metadata = data().deepCopy(fields()[4].schema(), other.metadata);
+      if (isValidValue(fields()[4], other.instance_id)) {
+        this.instance_id = data().deepCopy(fields()[4].schema(), other.instance_id);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
-      if (isValidValue(fields()[5], other.source_message)) {
-        this.source_message = data().deepCopy(fields()[5].schema(), other.source_message);
+      if (isValidValue(fields()[5], other.metadata)) {
+        this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
         fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
-      if (isValidValue(fields()[6], other.source_message_schema_name)) {
-        this.source_message_schema_name = data().deepCopy(fields()[6].schema(), other.source_message_schema_name);
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
-      if (isValidValue(fields()[7], other.source_message_offset)) {
-        this.source_message_offset = data().deepCopy(fields()[7].schema(), other.source_message_offset);
+      if (isValidValue(fields()[7], other.upstream_metadata)) {
+        this.upstream_metadata = data().deepCopy(fields()[7].schema(), other.upstream_metadata);
         fieldSetFlags()[7] = other.fieldSetFlags()[7];
       }
-      if (isValidValue(fields()[8], other.source_url)) {
-        this.source_url = data().deepCopy(fields()[8].schema(), other.source_url);
+      if (isValidValue(fields()[8], other.upstream_data)) {
+        this.upstream_data = data().deepCopy(fields()[8].schema(), other.upstream_data);
         fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
-      if (isValidValue(fields()[9], other.source_value)) {
-        this.source_value = data().deepCopy(fields()[9].schema(), other.source_value);
+      if (isValidValue(fields()[9], other.upstream_url)) {
+        this.upstream_url = data().deepCopy(fields()[9].schema(), other.upstream_url);
         fieldSetFlags()[9] = other.fieldSetFlags()[9];
       }
-      if (isValidValue(fields()[10], other.source_schema)) {
-        this.source_schema = data().deepCopy(fields()[10].schema(), other.source_schema);
+      if (isValidValue(fields()[10], other.upstream_response)) {
+        this.upstream_response = data().deepCopy(fields()[10].schema(), other.upstream_response);
         fieldSetFlags()[10] = other.fieldSetFlags()[10];
       }
-      if (isValidValue(fields()[11], other.source_schema_id)) {
-        this.source_schema_id = data().deepCopy(fields()[11].schema(), other.source_schema_id);
+      if (isValidValue(fields()[11], other.kafka_cluster)) {
+        this.kafka_cluster = data().deepCopy(fields()[11].schema(), other.kafka_cluster);
         fieldSetFlags()[11] = other.fieldSetFlags()[11];
       }
-      if (isValidValue(fields()[12], other.topic)) {
-        this.topic = data().deepCopy(fields()[12].schema(), other.topic);
+      if (isValidValue(fields()[12], other.success_topic)) {
+        this.success_topic = data().deepCopy(fields()[12].schema(), other.success_topic);
         fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
-      if (isValidValue(fields()[13], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[13].schema(), other.timestamp);
+      if (isValidValue(fields()[13], other.error_topic)) {
+        this.error_topic = data().deepCopy(fields()[13].schema(), other.error_topic);
         fieldSetFlags()[13] = other.fieldSetFlags()[13];
       }
     }
@@ -608,67 +611,110 @@ static {
      */
     private Builder(io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError other) {
       super(SCHEMA$);
-      if (isValidValue(fields()[0], other.correlation_id)) {
-        this.correlation_id = data().deepCopy(fields()[0].schema(), other.correlation_id);
+      if (isValidValue(fields()[0], other.timestamp)) {
+        this.timestamp = data().deepCopy(fields()[0].schema(), other.timestamp);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.environment_id)) {
-        this.environment_id = data().deepCopy(fields()[1].schema(), other.environment_id);
+      if (isValidValue(fields()[1], other.correlation_id)) {
+        this.correlation_id = data().deepCopy(fields()[1].schema(), other.correlation_id);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.service_id)) {
-        this.service_id = data().deepCopy(fields()[2].schema(), other.service_id);
+      if (isValidValue(fields()[2], other.environment_id)) {
+        this.environment_id = data().deepCopy(fields()[2].schema(), other.environment_id);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.exception)) {
-        this.exception = data().deepCopy(fields()[3].schema(), other.exception);
+      if (isValidValue(fields()[3], other.application_id)) {
+        this.application_id = data().deepCopy(fields()[3].schema(), other.application_id);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.metadata)) {
-        this.metadata = data().deepCopy(fields()[4].schema(), other.metadata);
+      if (isValidValue(fields()[4], other.instance_id)) {
+        this.instance_id = data().deepCopy(fields()[4].schema(), other.instance_id);
         fieldSetFlags()[4] = true;
       }
-      if (isValidValue(fields()[5], other.source_message)) {
-        this.source_message = data().deepCopy(fields()[5].schema(), other.source_message);
+      if (isValidValue(fields()[5], other.metadata)) {
+        this.metadata = data().deepCopy(fields()[5].schema(), other.metadata);
         fieldSetFlags()[5] = true;
       }
-      if (isValidValue(fields()[6], other.source_message_schema_name)) {
-        this.source_message_schema_name = data().deepCopy(fields()[6].schema(), other.source_message_schema_name);
+      if (isValidValue(fields()[6], other.data)) {
+        this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = true;
       }
-      if (isValidValue(fields()[7], other.source_message_offset)) {
-        this.source_message_offset = data().deepCopy(fields()[7].schema(), other.source_message_offset);
+      if (isValidValue(fields()[7], other.upstream_metadata)) {
+        this.upstream_metadata = data().deepCopy(fields()[7].schema(), other.upstream_metadata);
         fieldSetFlags()[7] = true;
       }
-      if (isValidValue(fields()[8], other.source_url)) {
-        this.source_url = data().deepCopy(fields()[8].schema(), other.source_url);
+      if (isValidValue(fields()[8], other.upstream_data)) {
+        this.upstream_data = data().deepCopy(fields()[8].schema(), other.upstream_data);
         fieldSetFlags()[8] = true;
       }
-      if (isValidValue(fields()[9], other.source_value)) {
-        this.source_value = data().deepCopy(fields()[9].schema(), other.source_value);
+      if (isValidValue(fields()[9], other.upstream_url)) {
+        this.upstream_url = data().deepCopy(fields()[9].schema(), other.upstream_url);
         fieldSetFlags()[9] = true;
       }
-      if (isValidValue(fields()[10], other.source_schema)) {
-        this.source_schema = data().deepCopy(fields()[10].schema(), other.source_schema);
+      if (isValidValue(fields()[10], other.upstream_response)) {
+        this.upstream_response = data().deepCopy(fields()[10].schema(), other.upstream_response);
         fieldSetFlags()[10] = true;
       }
-      if (isValidValue(fields()[11], other.source_schema_id)) {
-        this.source_schema_id = data().deepCopy(fields()[11].schema(), other.source_schema_id);
+      if (isValidValue(fields()[11], other.kafka_cluster)) {
+        this.kafka_cluster = data().deepCopy(fields()[11].schema(), other.kafka_cluster);
         fieldSetFlags()[11] = true;
       }
-      if (isValidValue(fields()[12], other.topic)) {
-        this.topic = data().deepCopy(fields()[12].schema(), other.topic);
+      if (isValidValue(fields()[12], other.success_topic)) {
+        this.success_topic = data().deepCopy(fields()[12].schema(), other.success_topic);
         fieldSetFlags()[12] = true;
       }
-      if (isValidValue(fields()[13], other.timestamp)) {
-        this.timestamp = data().deepCopy(fields()[13].schema(), other.timestamp);
+      if (isValidValue(fields()[13], other.error_topic)) {
+        this.error_topic = data().deepCopy(fields()[13].schema(), other.error_topic);
         fieldSetFlags()[13] = true;
       }
     }
 
     /**
+      * Gets the value of the 'timestamp' field.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
+      * @return The value.
+      */
+    public java.time.Instant getTimestamp() {
+      return timestamp;
+    }
+
+
+    /**
+      * Sets the value of the 'timestamp' field.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
+      * @param value The value of 'timestamp'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setTimestamp(java.time.Instant value) {
+      validate(fields()[0], value);
+      this.timestamp = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
+      fieldSetFlags()[0] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'timestamp' field has been set.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
+      * @return True if the 'timestamp' field has been set, false otherwise.
+      */
+    public boolean hasTimestamp() {
+      return fieldSetFlags()[0];
+    }
+
+
+    /**
+      * Clears the value of the 'timestamp' field.
+      * The timestamp of when the error occurred, in Unix epoch time UTC (required)
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearTimestamp() {
+      fieldSetFlags()[0] = false;
+      return this;
+    }
+
+    /**
       * Gets the value of the 'correlation_id' field.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @return The value.
       */
     public java.lang.CharSequence getCorrelationId() {
@@ -678,41 +724,41 @@ static {
 
     /**
       * Sets the value of the 'correlation_id' field.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @param value The value of 'correlation_id'.
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setCorrelationId(java.lang.CharSequence value) {
-      validate(fields()[0], value);
+      validate(fields()[1], value);
       this.correlation_id = value;
-      fieldSetFlags()[0] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
     /**
       * Checks whether the 'correlation_id' field has been set.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @return True if the 'correlation_id' field has been set, false otherwise.
       */
     public boolean hasCorrelationId() {
-      return fieldSetFlags()[0];
+      return fieldSetFlags()[1];
     }
 
 
     /**
       * Clears the value of the 'correlation_id' field.
-      * Unique id for event tracing
+      * Unique id for event tracing (required)
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearCorrelationId() {
       correlation_id = null;
-      fieldSetFlags()[0] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
     /**
       * Gets the value of the 'environment_id' field.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+      * Environment where the error took place (optional)
       * @return The value.
       */
     public java.lang.CharSequence getEnvironmentId() {
@@ -722,129 +768,129 @@ static {
 
     /**
       * Sets the value of the 'environment_id' field.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
+      * Environment where the error took place (optional)
       * @param value The value of 'environment_id'.
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setEnvironmentId(java.lang.CharSequence value) {
-      validate(fields()[1], value);
-      this.environment_id = value;
-      fieldSetFlags()[1] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'environment_id' field has been set.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
-      * @return True if the 'environment_id' field has been set, false otherwise.
-      */
-    public boolean hasEnvironmentId() {
-      return fieldSetFlags()[1];
-    }
-
-
-    /**
-      * Clears the value of the 'environment_id' field.
-      * Environment where the error took place. In this object, the environment can be any string. In NormalizedError, there is an enum which needs to be mapped to.
-      * @return This builder.
-      */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearEnvironmentId() {
-      environment_id = null;
-      fieldSetFlags()[1] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'service_id' field.
-      * The identifier of the service. This ...
-      * @return The value.
-      */
-    public java.lang.CharSequence getServiceId() {
-      return service_id;
-    }
-
-
-    /**
-      * Sets the value of the 'service_id' field.
-      * The identifier of the service. This ...
-      * @param value The value of 'service_id'.
-      * @return This builder.
-      */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setServiceId(java.lang.CharSequence value) {
       validate(fields()[2], value);
-      this.service_id = value;
+      this.environment_id = value;
       fieldSetFlags()[2] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'service_id' field has been set.
-      * The identifier of the service. This ...
-      * @return True if the 'service_id' field has been set, false otherwise.
+      * Checks whether the 'environment_id' field has been set.
+      * Environment where the error took place (optional)
+      * @return True if the 'environment_id' field has been set, false otherwise.
       */
-    public boolean hasServiceId() {
+    public boolean hasEnvironmentId() {
       return fieldSetFlags()[2];
     }
 
 
     /**
-      * Clears the value of the 'service_id' field.
-      * The identifier of the service. This ...
+      * Clears the value of the 'environment_id' field.
+      * Environment where the error took place (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearServiceId() {
-      service_id = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearEnvironmentId() {
+      environment_id = null;
       fieldSetFlags()[2] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'exception' field.
-      * Error information from the connector
+      * Gets the value of the 'application_id' field.
+      * Application where the error took place (optional)
       * @return The value.
       */
-    public java.lang.CharSequence getException() {
-      return exception;
+    public java.lang.CharSequence getApplicationId() {
+      return application_id;
     }
 
 
     /**
-      * Sets the value of the 'exception' field.
-      * Error information from the connector
-      * @param value The value of 'exception'.
+      * Sets the value of the 'application_id' field.
+      * Application where the error took place (optional)
+      * @param value The value of 'application_id'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setException(java.lang.CharSequence value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setApplicationId(java.lang.CharSequence value) {
       validate(fields()[3], value);
-      this.exception = value;
+      this.application_id = value;
       fieldSetFlags()[3] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'exception' field has been set.
-      * Error information from the connector
-      * @return True if the 'exception' field has been set, false otherwise.
+      * Checks whether the 'application_id' field has been set.
+      * Application where the error took place (optional)
+      * @return True if the 'application_id' field has been set, false otherwise.
       */
-    public boolean hasException() {
+    public boolean hasApplicationId() {
       return fieldSetFlags()[3];
     }
 
 
     /**
-      * Clears the value of the 'exception' field.
-      * Error information from the connector
+      * Clears the value of the 'application_id' field.
+      * Application where the error took place (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearException() {
-      exception = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearApplicationId() {
+      application_id = null;
       fieldSetFlags()[3] = false;
       return this;
     }
 
     /**
+      * Gets the value of the 'instance_id' field.
+      * Instance where the error took place (optional)
+      * @return The value.
+      */
+    public java.lang.CharSequence getInstanceId() {
+      return instance_id;
+    }
+
+
+    /**
+      * Sets the value of the 'instance_id' field.
+      * Instance where the error took place (optional)
+      * @param value The value of 'instance_id'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setInstanceId(java.lang.CharSequence value) {
+      validate(fields()[4], value);
+      this.instance_id = value;
+      fieldSetFlags()[4] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'instance_id' field has been set.
+      * Instance where the error took place (optional)
+      * @return True if the 'instance_id' field has been set, false otherwise.
+      */
+    public boolean hasInstanceId() {
+      return fieldSetFlags()[4];
+    }
+
+
+    /**
+      * Clears the value of the 'instance_id' field.
+      * Instance where the error took place (optional)
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearInstanceId() {
+      instance_id = null;
+      fieldSetFlags()[4] = false;
+      return this;
+    }
+
+    /**
       * Gets the value of the 'metadata' field.
-      * Keys value pairs for any domain specific metadata
+      * Metadata from the source system (optional)
       * @return The value.
       */
     public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getMetadata() {
@@ -854,424 +900,386 @@ static {
 
     /**
       * Sets the value of the 'metadata' field.
-      * Keys value pairs for any domain specific metadata
+      * Metadata from the source system (optional)
       * @param value The value of 'metadata'.
       * @return This builder.
       */
     public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
-      validate(fields()[4], value);
-      this.metadata = value;
-      fieldSetFlags()[4] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'metadata' field has been set.
-      * Keys value pairs for any domain specific metadata
-      * @return True if the 'metadata' field has been set, false otherwise.
-      */
-    public boolean hasMetadata() {
-      return fieldSetFlags()[4];
-    }
-
-
-    /**
-      * Clears the value of the 'metadata' field.
-      * Keys value pairs for any domain specific metadata
-      * @return This builder.
-      */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearMetadata() {
-      metadata = null;
-      fieldSetFlags()[4] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'source_message' field.
-      * Message that caused the error
-      * @return The value.
-      */
-    public java.lang.CharSequence getSourceMessage() {
-      return source_message;
-    }
-
-
-    /**
-      * Sets the value of the 'source_message' field.
-      * Message that caused the error
-      * @param value The value of 'source_message'.
-      * @return This builder.
-      */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceMessage(java.lang.CharSequence value) {
       validate(fields()[5], value);
-      this.source_message = value;
+      this.metadata = value;
       fieldSetFlags()[5] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_message' field has been set.
-      * Message that caused the error
-      * @return True if the 'source_message' field has been set, false otherwise.
+      * Checks whether the 'metadata' field has been set.
+      * Metadata from the source system (optional)
+      * @return True if the 'metadata' field has been set, false otherwise.
       */
-    public boolean hasSourceMessage() {
+    public boolean hasMetadata() {
       return fieldSetFlags()[5];
     }
 
 
     /**
-      * Clears the value of the 'source_message' field.
-      * Message that caused the error
+      * Clears the value of the 'metadata' field.
+      * Metadata from the source system (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceMessage() {
-      source_message = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearMetadata() {
+      metadata = null;
       fieldSetFlags()[5] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'source_message_schema_name' field.
-      * Schema name of the source message
+      * Gets the value of the 'data' field.
+      * Data from the source system (optional)
       * @return The value.
       */
-    public java.lang.CharSequence getSourceMessageSchemaName() {
-      return source_message_schema_name;
+    public java.nio.ByteBuffer getData() {
+      return data;
     }
 
 
     /**
-      * Sets the value of the 'source_message_schema_name' field.
-      * Schema name of the source message
-      * @param value The value of 'source_message_schema_name'.
+      * Sets the value of the 'data' field.
+      * Data from the source system (optional)
+      * @param value The value of 'data'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceMessageSchemaName(java.lang.CharSequence value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setData(java.nio.ByteBuffer value) {
       validate(fields()[6], value);
-      this.source_message_schema_name = value;
+      this.data = value;
       fieldSetFlags()[6] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_message_schema_name' field has been set.
-      * Schema name of the source message
-      * @return True if the 'source_message_schema_name' field has been set, false otherwise.
+      * Checks whether the 'data' field has been set.
+      * Data from the source system (optional)
+      * @return True if the 'data' field has been set, false otherwise.
       */
-    public boolean hasSourceMessageSchemaName() {
+    public boolean hasData() {
       return fieldSetFlags()[6];
     }
 
 
     /**
-      * Clears the value of the 'source_message_schema_name' field.
-      * Schema name of the source message
+      * Clears the value of the 'data' field.
+      * Data from the source system (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceMessageSchemaName() {
-      source_message_schema_name = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearData() {
+      data = null;
       fieldSetFlags()[6] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'source_message_offset' field.
-      * Offset of the source message
+      * Gets the value of the 'upstream_metadata' field.
+      * Metadata from the upstream system (required)
       * @return The value.
       */
-    public int getSourceMessageOffset() {
-      return source_message_offset;
+    public java.util.Map<java.lang.CharSequence,java.lang.CharSequence> getUpstreamMetadata() {
+      return upstream_metadata;
     }
 
 
     /**
-      * Sets the value of the 'source_message_offset' field.
-      * Offset of the source message
-      * @param value The value of 'source_message_offset'.
+      * Sets the value of the 'upstream_metadata' field.
+      * Metadata from the upstream system (required)
+      * @param value The value of 'upstream_metadata'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceMessageOffset(int value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setUpstreamMetadata(java.util.Map<java.lang.CharSequence,java.lang.CharSequence> value) {
       validate(fields()[7], value);
-      this.source_message_offset = value;
+      this.upstream_metadata = value;
       fieldSetFlags()[7] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_message_offset' field has been set.
-      * Offset of the source message
-      * @return True if the 'source_message_offset' field has been set, false otherwise.
+      * Checks whether the 'upstream_metadata' field has been set.
+      * Metadata from the upstream system (required)
+      * @return True if the 'upstream_metadata' field has been set, false otherwise.
       */
-    public boolean hasSourceMessageOffset() {
+    public boolean hasUpstreamMetadata() {
       return fieldSetFlags()[7];
     }
 
 
     /**
-      * Clears the value of the 'source_message_offset' field.
-      * Offset of the source message
+      * Clears the value of the 'upstream_metadata' field.
+      * Metadata from the upstream system (required)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceMessageOffset() {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearUpstreamMetadata() {
+      upstream_metadata = null;
       fieldSetFlags()[7] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'source_url' field.
-      * URL for the source object
+      * Gets the value of the 'upstream_data' field.
+      * Data which caused the error (optional)
       * @return The value.
       */
-    public java.lang.CharSequence getSourceUrl() {
-      return source_url;
+    public java.nio.ByteBuffer getUpstreamData() {
+      return upstream_data;
     }
 
 
     /**
-      * Sets the value of the 'source_url' field.
-      * URL for the source object
-      * @param value The value of 'source_url'.
+      * Sets the value of the 'upstream_data' field.
+      * Data which caused the error (optional)
+      * @param value The value of 'upstream_data'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceUrl(java.lang.CharSequence value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setUpstreamData(java.nio.ByteBuffer value) {
       validate(fields()[8], value);
-      this.source_url = value;
+      this.upstream_data = value;
       fieldSetFlags()[8] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_url' field has been set.
-      * URL for the source object
-      * @return True if the 'source_url' field has been set, false otherwise.
+      * Checks whether the 'upstream_data' field has been set.
+      * Data which caused the error (optional)
+      * @return True if the 'upstream_data' field has been set, false otherwise.
       */
-    public boolean hasSourceUrl() {
+    public boolean hasUpstreamData() {
       return fieldSetFlags()[8];
     }
 
 
     /**
-      * Clears the value of the 'source_url' field.
-      * URL for the source object
+      * Clears the value of the 'upstream_data' field.
+      * Data which caused the error (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceUrl() {
-      source_url = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearUpstreamData() {
+      upstream_data = null;
       fieldSetFlags()[8] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'source_value' field.
-      * The original object from the source service, which caused the error.
+      * Gets the value of the 'upstream_url' field.
+      * URL which caused the error (optional)
       * @return The value.
       */
-    public java.nio.ByteBuffer getSourceValue() {
-      return source_value;
+    public java.lang.CharSequence getUpstreamUrl() {
+      return upstream_url;
     }
 
 
     /**
-      * Sets the value of the 'source_value' field.
-      * The original object from the source service, which caused the error.
-      * @param value The value of 'source_value'.
+      * Sets the value of the 'upstream_url' field.
+      * URL which caused the error (optional)
+      * @param value The value of 'upstream_url'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceValue(java.nio.ByteBuffer value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setUpstreamUrl(java.lang.CharSequence value) {
       validate(fields()[9], value);
-      this.source_value = value;
+      this.upstream_url = value;
       fieldSetFlags()[9] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_value' field has been set.
-      * The original object from the source service, which caused the error.
-      * @return True if the 'source_value' field has been set, false otherwise.
+      * Checks whether the 'upstream_url' field has been set.
+      * URL which caused the error (optional)
+      * @return True if the 'upstream_url' field has been set, false otherwise.
       */
-    public boolean hasSourceValue() {
+    public boolean hasUpstreamUrl() {
       return fieldSetFlags()[9];
     }
 
 
     /**
-      * Clears the value of the 'source_value' field.
-      * The original object from the source service, which caused the error.
+      * Clears the value of the 'upstream_url' field.
+      * URL which caused the error (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceValue() {
-      source_value = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearUpstreamUrl() {
+      upstream_url = null;
       fieldSetFlags()[9] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'source_schema' field.
-      * Location to the definition of the source object's schema (if any).
+      * Gets the value of the 'upstream_response' field.
+      * Response from the upstream system (optional)
       * @return The value.
       */
-    public java.lang.CharSequence getSourceSchema() {
-      return source_schema;
+    public java.lang.CharSequence getUpstreamResponse() {
+      return upstream_response;
     }
 
 
     /**
-      * Sets the value of the 'source_schema' field.
-      * Location to the definition of the source object's schema (if any).
-      * @param value The value of 'source_schema'.
+      * Sets the value of the 'upstream_response' field.
+      * Response from the upstream system (optional)
+      * @param value The value of 'upstream_response'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceSchema(java.lang.CharSequence value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setUpstreamResponse(java.lang.CharSequence value) {
       validate(fields()[10], value);
-      this.source_schema = value;
+      this.upstream_response = value;
       fieldSetFlags()[10] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_schema' field has been set.
-      * Location to the definition of the source object's schema (if any).
-      * @return True if the 'source_schema' field has been set, false otherwise.
+      * Checks whether the 'upstream_response' field has been set.
+      * Response from the upstream system (optional)
+      * @return True if the 'upstream_response' field has been set, false otherwise.
       */
-    public boolean hasSourceSchema() {
+    public boolean hasUpstreamResponse() {
       return fieldSetFlags()[10];
     }
 
 
     /**
-      * Clears the value of the 'source_schema' field.
-      * Location to the definition of the source object's schema (if any).
+      * Clears the value of the 'upstream_response' field.
+      * Response from the upstream system (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceSchema() {
-      source_schema = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearUpstreamResponse() {
+      upstream_response = null;
       fieldSetFlags()[10] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'source_schema_id' field.
-      * Identifier of the source object's schema.
+      * Gets the value of the 'kafka_cluster' field.
+      * Intended kafka cluster (optional)
       * @return The value.
       */
-    public java.lang.CharSequence getSourceSchemaId() {
-      return source_schema_id;
+    public java.lang.CharSequence getKafkaCluster() {
+      return kafka_cluster;
     }
 
 
     /**
-      * Sets the value of the 'source_schema_id' field.
-      * Identifier of the source object's schema.
-      * @param value The value of 'source_schema_id'.
+      * Sets the value of the 'kafka_cluster' field.
+      * Intended kafka cluster (optional)
+      * @param value The value of 'kafka_cluster'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSourceSchemaId(java.lang.CharSequence value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setKafkaCluster(java.lang.CharSequence value) {
       validate(fields()[11], value);
-      this.source_schema_id = value;
+      this.kafka_cluster = value;
       fieldSetFlags()[11] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'source_schema_id' field has been set.
-      * Identifier of the source object's schema.
-      * @return True if the 'source_schema_id' field has been set, false otherwise.
+      * Checks whether the 'kafka_cluster' field has been set.
+      * Intended kafka cluster (optional)
+      * @return True if the 'kafka_cluster' field has been set, false otherwise.
       */
-    public boolean hasSourceSchemaId() {
+    public boolean hasKafkaCluster() {
       return fieldSetFlags()[11];
     }
 
 
     /**
-      * Clears the value of the 'source_schema_id' field.
-      * Identifier of the source object's schema.
+      * Clears the value of the 'kafka_cluster' field.
+      * Intended kafka cluster (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSourceSchemaId() {
-      source_schema_id = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearKafkaCluster() {
+      kafka_cluster = null;
       fieldSetFlags()[11] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'topic' field.
-      * Name of the intended destination topic. In this error, we have a destination topic.
+      * Gets the value of the 'success_topic' field.
+      * Intended topic for success (optional)
       * @return The value.
       */
-    public java.lang.CharSequence getTopic() {
-      return topic;
+    public java.lang.CharSequence getSuccessTopic() {
+      return success_topic;
     }
 
 
     /**
-      * Sets the value of the 'topic' field.
-      * Name of the intended destination topic. In this error, we have a destination topic.
-      * @param value The value of 'topic'.
+      * Sets the value of the 'success_topic' field.
+      * Intended topic for success (optional)
+      * @param value The value of 'success_topic'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setTopic(java.lang.CharSequence value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setSuccessTopic(java.lang.CharSequence value) {
       validate(fields()[12], value);
-      this.topic = value;
+      this.success_topic = value;
       fieldSetFlags()[12] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'topic' field has been set.
-      * Name of the intended destination topic. In this error, we have a destination topic.
-      * @return True if the 'topic' field has been set, false otherwise.
+      * Checks whether the 'success_topic' field has been set.
+      * Intended topic for success (optional)
+      * @return True if the 'success_topic' field has been set, false otherwise.
       */
-    public boolean hasTopic() {
+    public boolean hasSuccessTopic() {
       return fieldSetFlags()[12];
     }
 
 
     /**
-      * Clears the value of the 'topic' field.
-      * Name of the intended destination topic. In this error, we have a destination topic.
+      * Clears the value of the 'success_topic' field.
+      * Intended topic for success (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearTopic() {
-      topic = null;
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearSuccessTopic() {
+      success_topic = null;
       fieldSetFlags()[12] = false;
       return this;
     }
 
     /**
-      * Gets the value of the 'timestamp' field.
+      * Gets the value of the 'error_topic' field.
+      * Intended topic for error (optional)
       * @return The value.
       */
-    public java.time.LocalDate getTimestamp() {
-      return timestamp;
+    public java.lang.CharSequence getErrorTopic() {
+      return error_topic;
     }
 
 
     /**
-      * Sets the value of the 'timestamp' field.
-      * @param value The value of 'timestamp'.
+      * Sets the value of the 'error_topic' field.
+      * Intended topic for error (optional)
+      * @param value The value of 'error_topic'.
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setTimestamp(java.time.LocalDate value) {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder setErrorTopic(java.lang.CharSequence value) {
       validate(fields()[13], value);
-      this.timestamp = value;
+      this.error_topic = value;
       fieldSetFlags()[13] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'timestamp' field has been set.
-      * @return True if the 'timestamp' field has been set, false otherwise.
+      * Checks whether the 'error_topic' field has been set.
+      * Intended topic for error (optional)
+      * @return True if the 'error_topic' field has been set, false otherwise.
       */
-    public boolean hasTimestamp() {
+    public boolean hasErrorTopic() {
       return fieldSetFlags()[13];
     }
 
 
     /**
-      * Clears the value of the 'timestamp' field.
+      * Clears the value of the 'error_topic' field.
+      * Intended topic for error (optional)
       * @return This builder.
       */
-    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearTimestamp() {
+    public io.firkin.kstreams.normalizer.errors.v1.avsc.ExampleOneError.Builder clearErrorTopic() {
+      error_topic = null;
       fieldSetFlags()[13] = false;
       return this;
     }
@@ -1281,20 +1289,20 @@ static {
     public ExampleOneError build() {
       try {
         ExampleOneError record = new ExampleOneError();
-        record.correlation_id = fieldSetFlags()[0] ? this.correlation_id : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.environment_id = fieldSetFlags()[1] ? this.environment_id : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.service_id = fieldSetFlags()[2] ? this.service_id : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.exception = fieldSetFlags()[3] ? this.exception : (java.lang.CharSequence) defaultValue(fields()[3]);
-        record.metadata = fieldSetFlags()[4] ? this.metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[4]);
-        record.source_message = fieldSetFlags()[5] ? this.source_message : (java.lang.CharSequence) defaultValue(fields()[5]);
-        record.source_message_schema_name = fieldSetFlags()[6] ? this.source_message_schema_name : (java.lang.CharSequence) defaultValue(fields()[6]);
-        record.source_message_offset = fieldSetFlags()[7] ? this.source_message_offset : (java.lang.Integer) defaultValue(fields()[7]);
-        record.source_url = fieldSetFlags()[8] ? this.source_url : (java.lang.CharSequence) defaultValue(fields()[8]);
-        record.source_value = fieldSetFlags()[9] ? this.source_value : (java.nio.ByteBuffer) defaultValue(fields()[9]);
-        record.source_schema = fieldSetFlags()[10] ? this.source_schema : (java.lang.CharSequence) defaultValue(fields()[10]);
-        record.source_schema_id = fieldSetFlags()[11] ? this.source_schema_id : (java.lang.CharSequence) defaultValue(fields()[11]);
-        record.topic = fieldSetFlags()[12] ? this.topic : (java.lang.CharSequence) defaultValue(fields()[12]);
-        record.timestamp = fieldSetFlags()[13] ? this.timestamp : (java.time.LocalDate) defaultValue(fields()[13]);
+        record.timestamp = fieldSetFlags()[0] ? this.timestamp : (java.time.Instant) defaultValue(fields()[0]);
+        record.correlation_id = fieldSetFlags()[1] ? this.correlation_id : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.environment_id = fieldSetFlags()[2] ? this.environment_id : (java.lang.CharSequence) defaultValue(fields()[2]);
+        record.application_id = fieldSetFlags()[3] ? this.application_id : (java.lang.CharSequence) defaultValue(fields()[3]);
+        record.instance_id = fieldSetFlags()[4] ? this.instance_id : (java.lang.CharSequence) defaultValue(fields()[4]);
+        record.metadata = fieldSetFlags()[5] ? this.metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[5]);
+        record.data = fieldSetFlags()[6] ? this.data : (java.nio.ByteBuffer) defaultValue(fields()[6]);
+        record.upstream_metadata = fieldSetFlags()[7] ? this.upstream_metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[7]);
+        record.upstream_data = fieldSetFlags()[8] ? this.upstream_data : (java.nio.ByteBuffer) defaultValue(fields()[8]);
+        record.upstream_url = fieldSetFlags()[9] ? this.upstream_url : (java.lang.CharSequence) defaultValue(fields()[9]);
+        record.upstream_response = fieldSetFlags()[10] ? this.upstream_response : (java.lang.CharSequence) defaultValue(fields()[10]);
+        record.kafka_cluster = fieldSetFlags()[11] ? this.kafka_cluster : (java.lang.CharSequence) defaultValue(fields()[11]);
+        record.success_topic = fieldSetFlags()[12] ? this.success_topic : (java.lang.CharSequence) defaultValue(fields()[12]);
+        record.error_topic = fieldSetFlags()[13] ? this.error_topic : (java.lang.CharSequence) defaultValue(fields()[13]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;

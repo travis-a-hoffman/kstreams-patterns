@@ -2,36 +2,70 @@
   "type": "record",
   "namespace": "io.firkin.kstreams.normalizer.errors.v1.avsc",
   "name": "ExampleTwoError",
-  "doc": "Model for errors that arise from Confluent Connectors. Errors and message from specific connectors should be mapped to this schema.",
+  "doc": "Example Error Model which comes from a sink system. This error comes from a Sink which reads from a Topic, using the record to perform an action.",
   "fields": [
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "The timestamp of when the error occurred, in Unix epoch time UTC (required)"
+    },
     {
       "name": "correlation_id",
       "type": "string",
       "doc": "Unique id for event tracing"
     },
     {
-      "name": "environment",
-      "type": {
-        "type": "enum",
-        "name": "Environments",
-        "doc": "Environment where the error took place.",
-        "symbols": ["DEV", "QA", "STG", "PRD"]
-      }
+      "name": "environment_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Environment where the error took place (optional)"
     },
     {
-      "name": "exception",
-      "type": "string",
-      "doc": "Error information from the connector"
+      "name": "application_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Application where the error took place (optional)"
+    },
+    {
+      "name": "instance_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Instance where the error took place (optional)"
     },
     {
       "name": "metadata",
-      "type": {
-        "type": "map",
-        "values": "string"
-      },
-      "doc": "Keys value pairs for any domain specific metadata"
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": "string",
+          "default": null
+        }
+      ],
+      "default": null,
+      "doc": "Metadata from the source system (optional)"
     },
-
+    {
+      "name": "data",
+      "type": [
+        "null",
+        "bytes"
+      ],
+      "default": null,
+      "doc": "Data from the source system (optional)"
+    },
     {
       "name": "source_message",
       "type": "string",
@@ -56,13 +90,6 @@
       "name": "source_topic",
       "type": "string",
       "doc": "Name of the topic the message was consumed from"
-    },
-    {
-      "name": "timestamp",
-      "type": {
-        "type": "int",
-        "logicalType": "date"
-      }
     }
   ]
 }
