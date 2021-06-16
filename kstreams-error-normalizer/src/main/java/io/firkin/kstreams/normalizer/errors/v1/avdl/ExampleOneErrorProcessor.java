@@ -15,11 +15,23 @@
  *  limitations under the License.
  */
 
-package io.firkin.kstreams.v28;
+package io.firkin.kstreams.normalizer.errors.v1.avdl;
 
-public class HelloKStreams {
+import org.apache.kafka.streams.processor.api.Processor;
+import org.apache.kafka.streams.processor.api.ProcessorSupplier;
+import org.apache.kafka.streams.processor.api.Record;
 
-  public static void main(String[] argv) {
-    System.out.println("Hello, KStreams!");
+public class ExampleOneErrorProcessor<KIn, ExampleOneError, KOut, NormalizedError> implements Processor {
+  @Override
+  public void process(Record record) {
+
+  }
+
+  static class Supplier<KIn, ExampleOneError, KOut, NormalizedError> implements ProcessorSupplier {
+
+    @Override
+    public Processor<KIn, ExampleOneError, KOut, NormalizedError> get() {
+      return new ExampleOneErrorProcessor<KIn, ExampleOneError, KOut, NormalizedError>();
+    }
   }
 }

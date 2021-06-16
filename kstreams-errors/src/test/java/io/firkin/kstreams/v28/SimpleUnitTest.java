@@ -19,8 +19,6 @@ package io.firkin.kstreams.v28;
 
 import io.firkin.kstreams.utils.TestUtils;
 import org.apache.kafka.clients.admin.Admin;
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -30,23 +28,15 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.KafkaContainer;
-import org.testcontainers.containers.Network;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.lifecycle.Startables;
-import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.stream.StreamSupport;
 
 import static io.firkin.kstreams.utils.TestUtils.*;
@@ -94,7 +84,6 @@ public class SimpleUnitTest {
     );
   }
 
-
   // --- Test Cases ---------------------------------------------------------------------------------------
 
   /*
@@ -104,8 +93,7 @@ public class SimpleUnitTest {
   @Test
   void testHelloWorld() throws Exception {
     assertKafkaClusterReady();
-//    assertNotNull(container);
-//    assertTrue(container.isRunning());
+    assertAdminClientReady();
 
     final String topicName = "SimpleTest_testHelloWorld";
     Collection<NewTopic> topics = List.of(

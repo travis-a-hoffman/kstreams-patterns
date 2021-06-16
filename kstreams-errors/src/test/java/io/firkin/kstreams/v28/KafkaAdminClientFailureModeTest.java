@@ -69,6 +69,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopic() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "KafkaAdminClientFailureModeTest_testCreateTopic";
     Collection<NewTopic> topics = List.of(new NewTopic(topicName, defPartitions, defReplication));
@@ -94,6 +95,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopicThatAlreadyExists() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "KafkaAdminClientFailureModeTest_testCreateTopicThatAlreadyExists";
     Collection<NewTopic> topics = List.of(new NewTopic(topicName, defPartitions, defReplication));
@@ -123,9 +125,11 @@ public class KafkaAdminClientFailureModeTest {
     assertFalse(topicMap.containsKey(topicName));
   }
 
+  // TODO This test fails because ACLs are not configured to restrict ... or it just fails silently?
   @Test
   void testCreateTopicThatIsKafkaInternal() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "__consumer_offsets";
 
@@ -151,6 +155,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopicWithNullName() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = null;
     Collection<NewTopic> topics = List.of(new NewTopic(topicName, defPartitions, defReplication));
@@ -164,6 +169,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopicWithEmptyName() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "";
     Collection<NewTopic> topics = List.of(new NewTopic(topicName, defPartitions, defReplication));
@@ -180,6 +186,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopicWithMaxLengthName() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName =
         "KafkaAdminClientFailureModeTest_testCreateTopicWithTooLongName" +  // 62 chars * 4 = 248
@@ -211,6 +218,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopicWithTooLongName() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName =
         "KafkaAdminClientFailureModeTest_testCreateTopicWithTooLongName" +
@@ -233,6 +241,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testCreateTopicWithIllegalCharactersInName() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "KafkaAdminClientFailureModeTest!@#$%^*()+=testCreateTopicWithIllegalCharactersInName";
     Collection<NewTopic> topics = List.of(new NewTopic(topicName, defPartitions, defReplication));
@@ -249,6 +258,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testDeleteTopicThatIsKafkaInternal() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "__consumer_offsets";
 
@@ -271,6 +281,7 @@ public class KafkaAdminClientFailureModeTest {
   @Test
   void testDeleteTopicThatDoesNotExist() throws Exception {
     assertKafkaClusterReady();
+    assertAdminClientReady();
 
     final String topicName = "KafkaAdminClientFailureModeTest_testDeleteTopicThatDoesNotExist";
     Collection<NewTopic> topics = List.of(new NewTopic(topicName, defPartitions, defReplication));

@@ -31,7 +31,12 @@
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
             <version>${io.confluent.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-avro-serde</artifactId>
+            <version>${io.confluent.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
@@ -51,8 +56,47 @@
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+        <dependency>
+            <!-- needed for the generated Avro code -->
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>kafka</artifactId>
+            <version>1.15.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.15.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-schema-serializer</artifactId>
+            <version>6.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.firkin.kstreams</groupId>
+            <artifactId>kstreams-parent</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <type>pom</type>
+        </dependency>
+
+        <!--        <dependency>
+                    <groupId>org.apache.avro</groupId>
+                    <artifactId>avro-tools</artifactId>
+                    <version>${apache.avro.version}</version>
+                    <type>jar</type>
+                    <scope>compile</scope>
+                </dependency> -->
+
     </dependencies>
 
     <properties>
@@ -60,7 +104,7 @@
 
     <build>
         <plugins>
-            <!-- avro code generation -->
+            <!-- avro -> java code generation -->
             <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
@@ -82,6 +126,47 @@
                 </executions>
             </plugin>
 
+            <!-- avro protocol -> avro schema -->
+            <plugin>
+                <!-- TODO This needs work
+                  Command line:
+                  $> java -jar ~/.m2/repository/org/apache/avro/avro-tools/1.10.2/avro-tools-1.10.2.jar idl2schemata ./kstreams-error-normalizer/src/main/avro/io/firkin/kstreams/normalizer/errors/NormalizeErrorProtocol.avdl ./kstreams-error-normalizer/src/main/avro/io/firkin/kstreams/normalizer/errors
+                  -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.apache.avro.tool.Main</mainClass>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <includeProjectDependencies>false</includeProjectDependencies>
+                    <executableDependency>
+                        <dependency>
+                            <groupId>org.apache.avro</groupId>
+                            <artifactId>avro-tools</artifactId>
+                        </dependency>
+                    </executableDependency>
+                    <arguments>
+                        <argument>-jar</argument>
+                        <argument>~/.m2/repository/org/apache/avro/avro-tools/${apache.avro.version}/avro-tools-${apache.avro.version}.jar</argument>
+                        <argument>src/main/avro/**/*.avdl</argument>
+                    </arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.avro</groupId>
+                        <artifactId>avro-tools</artifactId>
+                        <version>${apache.avro.version}</version>
+                        <type>jar</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <!-- copy *.avsc files over as resources for tests to load -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>

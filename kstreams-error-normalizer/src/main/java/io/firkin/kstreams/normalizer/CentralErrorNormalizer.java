@@ -105,7 +105,6 @@ public class CentralErrorNormalizer {
         streamsBuilder.stream(List.of("example.one.error.topic", "example.two.error.topic"), Consumed.with(byteArraySerde, baseErrorSerde));
   }
 
-
   class CentralDeserializationExceptionHandler implements DeserializationExceptionHandler {
     @Override
     public DeserializationHandlerResponse handle(ProcessorContext processorContext, ConsumerRecord<byte[], byte[]> consumerRecord, Exception e) {

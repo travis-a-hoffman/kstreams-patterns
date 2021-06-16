@@ -16,8 +16,8 @@ import org.apache.avro.message.SchemaStore;
      Errors of this type will need to be mapped to a common schema. */
 @org.apache.avro.specific.AvroGenerated
 public class BaseError extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 1468797623987658628L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BaseError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"Example Model for errors like those which might arise from a Source Connector.\\n     Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC (required)\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing (required)\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place (optional)\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place (optional)\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place (optional)\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"Metadata from the source system (optional)\",\"default\":null},{\"name\":\"data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data from the source system (optional)\",\"default\":null}]}");
+  private static final long serialVersionUID = 4195425642083324164L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"BaseError\",\"namespace\":\"io.firkin.kstreams.normalizer.errors.v1.avdl\",\"doc\":\"Example Model for errors like those which might arise from a Source Connector.\\n     Errors of this type will need to be mapped to a common schema.\",\"fields\":[{\"name\":\"timestamp\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"The timestamp of when the error occurred, in Unix epoch time UTC (required)\"},{\"name\":\"correlation_id\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"},\"doc\":\"Unique id for event tracing (required)\"},{\"name\":\"environment_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Environment where the error took place (optional)\",\"default\":null},{\"name\":\"application_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Application where the error took place (optional)\",\"default\":null},{\"name\":\"instance_id\",\"type\":[\"null\",\"string\"],\"doc\":\"Instance where the error took place (optional)\",\"default\":null},{\"name\":\"metadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"doc\":\"Metadata from the source system (optional)\",\"default\":null},{\"name\":\"data\",\"type\":[\"null\",\"bytes\"],\"doc\":\"Data from the source system (optional)\",\"default\":null},{\"name\":\"peters_data\",\"type\":\"string\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -90,6 +90,7 @@ static {
    private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
   /** Data from the source system (optional) */
    private java.nio.ByteBuffer data;
+   private java.lang.CharSequence peters_data;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -107,8 +108,9 @@ static {
    * @param instance_id Instance where the error took place (optional)
    * @param metadata Metadata from the source system (optional)
    * @param data Data from the source system (optional)
+   * @param peters_data The new value for peters_data
    */
-  public BaseError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer data) {
+  public BaseError(java.time.Instant timestamp, java.lang.CharSequence correlation_id, java.lang.CharSequence environment_id, java.lang.CharSequence application_id, java.lang.CharSequence instance_id, java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata, java.nio.ByteBuffer data, java.lang.CharSequence peters_data) {
     this.timestamp = timestamp.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
     this.correlation_id = correlation_id;
     this.environment_id = environment_id;
@@ -116,6 +118,7 @@ static {
     this.instance_id = instance_id;
     this.metadata = metadata;
     this.data = data;
+    this.peters_data = peters_data;
   }
 
   public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
@@ -130,6 +133,7 @@ static {
     case 4: return instance_id;
     case 5: return metadata;
     case 6: return data;
+    case 7: return peters_data;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -137,6 +141,7 @@ static {
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
       new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
+      null,
       null,
       null,
       null,
@@ -162,6 +167,7 @@ static {
     case 4: instance_id = (java.lang.CharSequence)value$; break;
     case 5: metadata = (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>)value$; break;
     case 6: data = (java.nio.ByteBuffer)value$; break;
+    case 7: peters_data = (java.lang.CharSequence)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -293,6 +299,23 @@ static {
   }
 
   /**
+   * Gets the value of the 'peters_data' field.
+   * @return The value of the 'peters_data' field.
+   */
+  public java.lang.CharSequence getPetersData() {
+    return peters_data;
+  }
+
+
+  /**
+   * Sets the value of the 'peters_data' field.
+   * @param value the value to set.
+   */
+  public void setPetersData(java.lang.CharSequence value) {
+    this.peters_data = value;
+  }
+
+  /**
    * Creates a new BaseError RecordBuilder.
    * @return A new BaseError RecordBuilder
    */
@@ -347,6 +370,7 @@ static {
     private java.util.Map<java.lang.CharSequence,java.lang.CharSequence> metadata;
     /** Data from the source system (optional) */
     private java.nio.ByteBuffer data;
+    private java.lang.CharSequence peters_data;
 
     /** Creates a new Builder */
     private Builder() {
@@ -387,6 +411,10 @@ static {
         this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = other.fieldSetFlags()[6];
       }
+      if (isValidValue(fields()[7], other.peters_data)) {
+        this.peters_data = data().deepCopy(fields()[7].schema(), other.peters_data);
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
+      }
     }
 
     /**
@@ -422,6 +450,10 @@ static {
       if (isValidValue(fields()[6], other.data)) {
         this.data = data().deepCopy(fields()[6].schema(), other.data);
         fieldSetFlags()[6] = true;
+      }
+      if (isValidValue(fields()[7], other.peters_data)) {
+        this.peters_data = data().deepCopy(fields()[7].schema(), other.peters_data);
+        fieldSetFlags()[7] = true;
       }
     }
 
@@ -732,6 +764,46 @@ static {
       return this;
     }
 
+    /**
+      * Gets the value of the 'peters_data' field.
+      * @return The value.
+      */
+    public java.lang.CharSequence getPetersData() {
+      return peters_data;
+    }
+
+
+    /**
+      * Sets the value of the 'peters_data' field.
+      * @param value The value of 'peters_data'.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder setPetersData(java.lang.CharSequence value) {
+      validate(fields()[7], value);
+      this.peters_data = value;
+      fieldSetFlags()[7] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'peters_data' field has been set.
+      * @return True if the 'peters_data' field has been set, false otherwise.
+      */
+    public boolean hasPetersData() {
+      return fieldSetFlags()[7];
+    }
+
+
+    /**
+      * Clears the value of the 'peters_data' field.
+      * @return This builder.
+      */
+    public io.firkin.kstreams.normalizer.errors.v1.avdl.BaseError.Builder clearPetersData() {
+      peters_data = null;
+      fieldSetFlags()[7] = false;
+      return this;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public BaseError build() {
@@ -744,6 +816,7 @@ static {
         record.instance_id = fieldSetFlags()[4] ? this.instance_id : (java.lang.CharSequence) defaultValue(fields()[4]);
         record.metadata = fieldSetFlags()[5] ? this.metadata : (java.util.Map<java.lang.CharSequence,java.lang.CharSequence>) defaultValue(fields()[5]);
         record.data = fieldSetFlags()[6] ? this.data : (java.nio.ByteBuffer) defaultValue(fields()[6]);
+        record.peters_data = fieldSetFlags()[7] ? this.peters_data : (java.lang.CharSequence) defaultValue(fields()[7]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;

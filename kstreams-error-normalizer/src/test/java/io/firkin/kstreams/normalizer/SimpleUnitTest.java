@@ -23,9 +23,7 @@ import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.kafka.clients.admin.Admin;
-import org.apache.kafka.clients.admin.ListTopicsOptions;
-import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -39,24 +37,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
-import static io.firkin.kstreams.normalizer.utils.TestUtils.TIMEOUT;
-import static io.firkin.kstreams.normalizer.utils.TestUtils.TIMEUNIT;
-import static io.firkin.kstreams.normalizer.utils.TestUtils.assertKafkaClusterReady;
-import static io.firkin.kstreams.normalizer.utils.TestUtils.getAdminClient;
-import static io.firkin.kstreams.normalizer.utils.TestUtils.getBootstrapServers;
+//import static io.firkin.kstreams.normalizer.utils.TestUtils.TIMEOUT;
+//import static io.firkin.kstreams.normalizer.utils.TestUtils.TIMEUNIT;
+//import static io.firkin.kstreams.normalizer.utils.TestUtils.assertKafkaClusterReady;
+//import static io.firkin.kstreams.normalizer.utils.TestUtils.getAdminClient;
+//import static io.firkin.kstreams.normalizer.utils.TestUtils.getBootstrapServers;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class SimpleUnitTest {
+
+  public static final long      TIMEOUT = 5L;
+  public static final TimeUnit TIMEUNIT = TimeUnit.SECONDS;
 
   // --- Kafka Stuff --------------------------------------------------------------------------------------
   private static Admin admin;
@@ -73,20 +72,22 @@ public class SimpleUnitTest {
 
   @BeforeAll
   static void initializeClients() {
-    admin = getAdminClient();
+    String bootstrap = "localhost:9092"; //getBootstrapServers();
+    admin = AdminClient.create(
+        Map.of(
+            AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrap
+        ));
 
-    String bootstrap = getBootstrapServers();
 
     Properties props = new Properties();
     props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrap);
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
     props.put(ProducerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString());
-    // TODO Run with a "real" schema registry.
-    // props.put("schema.registry.url", "http://localhost:2181");
+    props.put("schema.registry.url", "http://localhost:8081");
 
     // See: https://github.com/testcontainers/testcontainers-java/blob/master/modules/kafka/src/main/java/org/testcontainers/containers/KafkaContainer.java
-    props.put("schema.registry.url", "mock://simple.unit.test");
+    //props.put("schema.registry.url", "sche//simple.unit.test");
 
    // TODO Switch To io.firkin.containers.KafkaCluster
     //    Add Schema Registry to the initialization of a cluster.
@@ -149,7 +150,8 @@ public class SimpleUnitTest {
     FunnyName funny = faker.funnyName();
 
     final String topicName = "SimpleUnitTest_testHandleErrorRecord_helloErrorTopic";
-    assertKafkaClusterReady();
+//    assertKafkaClusterReady();
+    // TODO This can fail on repeated runs when not using testContainers, need to cleanup the topic or delete the cluster between runs.
     createTopic(topicName);
 
     assertTopicReady(topicName);
@@ -167,6 +169,7 @@ public class SimpleUnitTest {
     avroRecord.put("timestamp", System.currentTimeMillis()); // Unix Time
     avroRecord.put("personName", funny.name());
 
+    // TODO This needs some more work, can't find: com.fasterxml.jackson.annotation.JsonKey
     String key = UUID.randomUUID().toString();
     ProducerRecord<String, GenericRecord> record = new ProducerRecord<>(topicName, key, avroRecord);
     try {

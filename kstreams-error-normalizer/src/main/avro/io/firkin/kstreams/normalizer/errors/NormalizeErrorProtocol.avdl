@@ -57,6 +57,8 @@ protocol NormalizedErrorProtocol {
 
         /** Data from the source system (optional) */
         union{ null, bytes } data = null;
+
+        string peters_data;
     }
 
     /**

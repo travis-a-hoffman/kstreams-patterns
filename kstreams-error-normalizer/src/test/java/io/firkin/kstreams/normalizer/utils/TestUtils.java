@@ -85,6 +85,9 @@ public class TestUtils {
         .withEnv("KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR", "1")
         .withEnv("KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS", "1")
         .withEnv("KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR", "1")
+        // TODO Is it possible to dial this down for local testing?
+//        .withEnv("KAFKA_GROUP_MIN_SESSION_TIMEOUT_MS", "1000") // ENV variables do not seem to override
+//        .withEnv("KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS", "30000") // ENV variables do not seem to override
         .withEnv("KAFKA_TRANSACTION_STATE_LOG_MIN_ISR", "1");
 
     try {

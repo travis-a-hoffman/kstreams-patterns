@@ -43,6 +43,7 @@ public class TestUtils {
   public static final String KAFKA_VERSION = "2.8";
   public static final String CONFLUENT_VERSION = "6.1.1";
   public static final String CP_KAFKA = "confluentinc/cp-kafka";
+  public static final String CP_SERVER = "confluentinc/cp-server";
   public static final String CP_SCHEMA_REGISTRY = "confluentinc/cp-schema-registry";
   public static final String CP_ZOOKEEPER = "confluentinc/cp-zookeeper";
 
@@ -51,22 +52,23 @@ public class TestUtils {
   private static Network network;
 
 
-  @Container
-  private static KafkaContainer kafkaContainer;
-  @Container
-  private static SchemaRegistryContainer schemaRegistryContainer;
-  @Container
-  private static ZookeeperContainer zookeeperContainer;
+//  @Container
+//  private static KafkaContainer kafkaContainer;
+//  @Container
+//  private static SchemaRegistryContainer schemaRegistryContainer;
+//  @Container
+//  private static ZookeeperContainer zookeeperContainer;
 
   private static AdminClient adminClient;
 
-  private static String bootstrap;
+  private static String bootstrap = "localhost:9092";
   private static String registry;
   private static String zookeeper;
 
   static {
     // TODO This can take a minute (or more) in some cases.
-    spinupContainers();
+    //spinupContainers();
+    initializeAdminClient();
   }
 
   public static AdminClient getAdminClient() {
@@ -84,6 +86,7 @@ public class TestUtils {
    *
    * NOTE: TestContainers automatically cleans up / spins down all containers.
    */
+  /*
   private static synchronized void spinupContainers() {
     if (network != null || kafkaContainer != null || bootstrap != null || adminClient != null) {
       return;
@@ -100,6 +103,7 @@ public class TestUtils {
         .withEnv("KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR", "1")
         .withEnv("KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS", "1")
         .withEnv("KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR", "1")
+        .withEnv("KAFKA_AUTO_CREATE_TOPICS_ENABLE", "false") // Only allow admin client to create topics.
         .withEnv("KAFKA_TRANSACTION_STATE_LOG_MIN_ISR", "1");
 
 //    schemaRegistryContainer = new SchemaRegistryContainer(DockerImageName.parse(CP_SCHEMA_REGISTRY).withTag(CONFLUENT_VERSION))
@@ -134,7 +138,7 @@ public class TestUtils {
     long lStop = System.currentTimeMillis();
     Duration d = Duration.ofMillis(lStop - lStart);
     System.out.println("TESTCONTAINERS: Spinning up Kafka Cluster Container(s) took " +d.toSeconds()+"."+d.toMillisPart()+" seconds.");
-
+*/
     /*
      * Each test case will need to configure the consumer/producer for itself.
      * Here are some very simple examples. Note the use of UUIDs to prevent
@@ -159,18 +163,30 @@ public class TestUtils {
         new StringDeserializer()
     );
      */
+  /*
+  } */
+
+  public static void initializeAdminClient() {
+    adminClient = AdminClient.create(
+        Map.of(
+            AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrap
+        ));
   }
 
   // --- Kafka Container Assertions
 
   public static void assertKafkaClusterReady() {
-    assertNotNull(kafkaContainer);
-    assertTrue(kafkaContainer.isRunning());
+//    assertNotNull(kafkaContainer);
+//    assertTrue(kafkaContainer.isRunning());
   }
 
   public static void assertSchemaRegistryReady() {
-    assertNotNull(kafkaContainer);
-    assertTrue(kafkaContainer.isRunning());
+//    assertNotNull(kafkaContainer);
+//    assertTrue(kafkaContainer.isRunning());
+  }
+
+  public static void assertAdminClientReady() {
+    assertNotNull(adminClient, "KafkaAdmin client not ready.");
   }
 
 }
